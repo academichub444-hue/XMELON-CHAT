@@ -1508,8 +1508,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="recent-list" id="recentList"></div>
       <div class="sb-spacer"></div>
       <div class="user-row">
-        <div class="avatar">M</div>
-        <div class="user-meta"><div class="un">Melon User</div><div class="up">Free Plan</div></div>
+        <div class="avatar">G</div>
+        <div class="user-meta"><div class="un">Guest User</div><div class="up">Free Plan</div></div>
         <span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
       </div>
     </aside>
@@ -1604,6 +1604,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="st-rtext"><div class="st-rtitle">Gate Key</div><div class="st-rsub" id="beGateSub">Not set</div></div>
           <div class="st-trail"><span class="st-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
         </div>
+        <div class="st-row" id="beDiagRow">
+          <div class="st-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <div class="st-rtext"><div class="st-rtitle">Run diagnostics</div><div class="st-rsub" id="beDiagSub">Check which AI provider keys are active</div></div>
+          <div class="st-trail"><span class="st-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
+        </div>
+        <div id="beDiagResult" style="display:none;padding:4px 16px 14px"></div>
       </div>
 
       <div class="st-label">AI Preferences</div>
@@ -2977,68 +2983,67 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
 
       <!-- PRO -->
-      <div class="gl ps-plan ps-plan-pop sel" data-plan="pro" data-mo="$9.99" data-yr="$95.88">
+      <div class="gl ps-plan ps-plan-pop sel" data-plan="pro" data-mo="R199" data-yr="R1,990">
         <div class="ps-pop-badge">Popular</div>
         <div class="ps-plan-row">
           <div class="ps-plan-left">
             <div class="ps-plan-ic ic-pro"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7l4.2 3.2L12 4l4.8 6.2L21 7l-1.8 11H4.8z"/></svg></div>
             <div class="ps-plan-name">Pro Plan <span class="ps-mini-pop">Popular</span></div>
-            <div class="ps-plan-desc">Unlock more power and higher limits.</div>
-            <div class="ps-plan-price"><span class="ps-amt amt-pro"><span class="mo">$9.99</span><span class="yr">$95.88</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
-            <div class="ps-yr-row yr"><span class="ps-old">$119.88</span><span class="ps-savep">Save $24.00</span></div>
+            <div class="ps-plan-desc">More power, higher daily limits and the full AI model lineup.</div>
+            <div class="ps-plan-price"><span class="ps-amt amt-pro"><span class="mo">R199</span><span class="yr">R1,990</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
+            <div class="ps-yr-row yr"><span class="ps-old">R2,388</span><span class="ps-savep">Save R398 · 2 months free</span></div>
           </div>
           <div class="ps-plan-feats">
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Everything in Free</div>
-            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Access to advanced AI models</div>
-            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Up to 100 messages per day</div>
+            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>All AI models — chat, code &amp; documents</div>
+            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Up to 1,500 messages per day</div>
+            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Image &amp; document generation (Word, Excel, PPT)</div>
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Priority response speed</div>
-            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Extended chat history</div>
-            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Custom AI settings</div>
+            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Extended history &amp; custom AI settings</div>
           </div>
         </div>
         <span class="ps-radio"></span>
       </div>
 
       <!-- MAX -->
-      <div class="gl ps-plan" data-plan="max" data-mo="$19.99" data-yr="$191.88">
+      <div class="gl ps-plan" data-plan="max" data-mo="R329" data-yr="R3,290">
         <div class="ps-plan-row">
           <div class="ps-plan-left">
             <div class="ps-plan-ic ic-max"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
             <div class="ps-plan-name">Max Plan</div>
-            <div class="ps-plan-desc">For power users who need the best performance.</div>
-            <div class="ps-plan-price"><span class="ps-amt amt-max"><span class="mo">$19.99</span><span class="yr">$191.88</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
-            <div class="ps-yr-row yr"><span class="ps-old">$239.88</span><span class="ps-savep">Save $48.00</span></div>
+            <div class="ps-plan-desc">Peak performance for power users and serious builders.</div>
+            <div class="ps-plan-price"><span class="ps-amt amt-max"><span class="mo">R329</span><span class="yr">R3,290</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
+            <div class="ps-yr-row yr"><span class="ps-old">R3,948</span><span class="ps-savep">Save R658 · 2 months free</span></div>
           </div>
           <div class="ps-plan-feats">
             <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Everything in Pro</div>
-            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Unlimited messages</div>
-            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Access to latest AI models</div>
+            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Up to 5,000 messages per day</div>
+            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Forge build mode + live preview workspace</div>
+            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Image &amp; video generation</div>
             <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Fastest response speed</div>
-            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Unlimited chat history</div>
-            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Early access to new features</div>
-            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Priority customer support</div>
+            <div class="ps-pf"><svg class="chk-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Unlimited chat history &amp; early access</div>
           </div>
         </div>
         <span class="ps-radio"></span>
       </div>
 
       <!-- TEAM -->
-      <div class="gl ps-plan" data-plan="team" data-mo="$29.99" data-yr="$287.88">
+      <div class="gl ps-plan" data-plan="team" data-mo="R549" data-yr="R5,490">
         <div class="ps-plan-row">
           <div class="ps-plan-left">
             <div class="ps-plan-ic ic-team"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="8.5" r="3.2"/><circle cx="16.5" cy="10" r="2.4"/><path d="M3 19a6 6 0 0 1 12 0z"/><path d="M14.8 19a4.5 4.5 0 0 1 6.2-3.4 4 4 0 0 1 .8 3.4z"/></svg></div>
             <div class="ps-plan-name">Team Plan</div>
-            <div class="ps-plan-desc">Collaborate and share with your team.</div>
-            <div class="ps-plan-price"><span class="ps-amt amt-team"><span class="mo">$29.99</span><span class="yr">$287.88</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
-            <div class="ps-yr-row yr"><span class="ps-old">$359.88</span><span class="ps-savep">Save $72.00</span></div>
+            <div class="ps-plan-desc">Collaborate, share and manage your whole team.</div>
+            <div class="ps-plan-price"><span class="ps-amt amt-team"><span class="mo">R549</span><span class="yr">R5,490</span></span><span class="ps-per"><span class="mo">/ month</span><span class="yr">/ year</span></span></div>
+            <div class="ps-yr-row yr"><span class="ps-old">R6,588</span><span class="ps-savep">Save R1,098 · 2 months free</span></div>
           </div>
           <div class="ps-plan-feats">
             <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Everything in Max</div>
-            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Team collaboration</div>
-            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Shared chat history</div>
-            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Role-based access</div>
-            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Admin control panel</div>
-            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Priority support</div>
+            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Up to 6,000 messages per day</div>
+            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Team collaboration &amp; shared workspace</div>
+            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Shared chat &amp; asset library</div>
+            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Role-based access &amp; admin panel</div>
+            <div class="ps-pf"><svg class="chk-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Connectors, integrations &amp; priority support</div>
           </div>
         </div>
         <span class="ps-radio"></span>
@@ -3069,9 +3074,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
       <button class="ps-continue" id="planContinue">
         <div class="mo"><div class="ps-cont-main">Continue</div></div>
-        <div class="yr"><div class="ps-cont-main">Continue with Yearly Plan</div><div class="ps-cont-sub">Billed <span id="billedAmt">$95.88</span> today</div></div>
+        <div class="yr"><div class="ps-cont-main">Continue with Yearly Plan</div><div class="ps-cont-sub">Billed <span id="billedAmt">R1,990</span> today</div></div>
       </button>
-      <button class="ps-restore">Restore Purchases</button>
+      <button class="ps-restore" id="manageSub">Manage Subscription</button>
     </div>
   </div>
 
@@ -3220,6 +3225,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
 [data-theme=dark] .melon-toast{background:#23233a;color:#ECEAF7;box-shadow:0 12px 30px rgba(0,0,0,.6)}
 .pf-avatar.has-img{background-size:cover;background-position:center}
 .pf-avatar.has-img svg{display:none}
+/* iOS Safari focus auto-zoom fix: text inputs must be >=16px */
+.field input,.sp-input input,.sp-ta textarea,.ct-search input,.key-addrow input,.hc-search input,.ed-input,input[type=text],input[type=email],input[type=password],input[type=search],input[type=number],input[type=tel]{font-size:16px}
 </style>
 <div class="cs-scrim" id="edScrim"></div>
 <div class="cs-sheet" id="edSheet" role="dialog" aria-modal="true" aria-labelledby="edTitle">
@@ -3277,15 +3284,14 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   // ---- Supabase OAuth (Google / GitHub) ----
   const SB_AUTH_URL = 'https://jdgvtvuvpcpqfcykvacy.supabase.co';
   const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpkZ3Z0dnV2cGNwcWZjeWt2YWN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MTU1OTIsImV4cCI6MjA5Nzk5MTU5Mn0.IULx0Z5q39tbBfiS3Mte53XIjy-cLO0Dq44FDiwl9Ho';
-  let __sb = null;
-  async function getSB(){
-    if (__sb) return __sb;
-    try {
-      const mod = await import('https://esm.sh/@supabase/supabase-js@2');
-      __sb = mod.createClient(SB_AUTH_URL, SB_ANON, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
-    } catch (e) { __sb = null; }
-    return __sb;
+  const AUTH_BASE = SB_AUTH_URL + '/auth/v1';
+  async function authFetch(path, body){
+    const r = await fetch(AUTH_BASE + path, { method: 'POST', headers: { 'apikey': SB_ANON, 'authorization': 'Bearer ' + SB_ANON, 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    let data = {}; try { data = await r.json(); } catch (_) {}
+    return { ok: r.ok, status: r.status, data };
   }
+  function authErr(data){ const m = data && (data.error_description || data.msg || data.error || data.message); return m || 'Something went wrong'; }
+  function decodeJwt(tok){ try { return JSON.parse(atob(tok.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))); } catch (_) { return {}; } }
   function saveSession(s){
     try {
       if (!s) return;
@@ -3293,28 +3299,54 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       const u = s.user || {}, md = u.user_metadata || {};
       localStorage.setItem('melon_user', JSON.stringify({ id: u.id, email: u.email || '', name: md.full_name || md.name || md.user_name || '' }));
     } catch (_) {}
+    try { updateUserChip(); } catch (_) {}
   }
-  async function oauthLogin(provider){
-    const sb = await getSB();
-    if (!sb){ try { toast('Sign-in unavailable — check your connection'); } catch (_) {} return; }
-    try { await sb.auth.signInWithOAuth({ provider, options: { redirectTo: location.origin + location.pathname } }); }
-    catch (e) { try { toast('Could not start ' + provider + ' sign-in'); } catch (_) {} }
+  const PLAN_LABEL = { free: 'Free Plan', pro: 'Pro Plan', team: 'Team Plan', max: 'Max Plan' };
+  async function updateUserChip(){
+    const row = document.querySelector('.user-row'); if (!row) return;
+    const av = row.querySelector('.avatar'), un = row.querySelector('.un'), up = row.querySelector('.up');
+    let user = null; try { user = JSON.parse(localStorage.getItem('melon_user') || 'null'); } catch (_) {}
+    let token = ''; try { token = localStorage.getItem('melon_token') || ''; } catch (_) {}
+    if (token && user && user.id){
+      const name = (user.name && user.name.trim()) || (user.email ? user.email.split('@')[0] : '') || 'Member';
+      if (un) un.textContent = name;
+      if (av) av.textContent = (name.trim()[0] || 'M').toUpperCase();
+      try {
+        const r = await fetch(SB_AUTH_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(user.id) + '&select=plan,display_name', { headers: { apikey: SB_ANON, authorization: 'Bearer ' + token } });
+        if (r.ok){ const a = await r.json(); const p = a && a[0];
+          if (p){ if (up) up.textContent = PLAN_LABEL[p.plan] || 'Free Plan';
+            if (un && p.display_name) un.textContent = p.display_name; } }
+      } catch (_) {}
+    } else {
+      if (un) un.textContent = 'Guest User';
+      if (av) av.textContent = 'G';
+      if (up) up.textContent = 'Free Plan';
+    }
+  }
+  function oauthLogin(provider){
+    try {
+      const redirect = encodeURIComponent(location.origin + location.pathname);
+      location.href = AUTH_BASE + '/authorize?provider=' + provider + '&redirect_to=' + redirect;
+    } catch (e) { try { toast('Could not start ' + provider + ' sign-in'); } catch (_) {} }
   }
   async function initAuthSession(){
-    const returning = /access_token=|error=/.test(location.hash || '');
-    let hasLocal = false; try { hasLocal = !!localStorage.getItem('melon_token'); } catch (_) {}
-    if (!returning && !hasLocal) return;          // don't load the SDK unless needed
-    const sb = await getSB(); if (!sb) return;
     try {
-      const { data } = await sb.auth.getSession();
-      const s = data && data.session;
-      if (s){ saveSession(s);
-        if (returning){ try { history.replaceState(null, '', location.origin + location.pathname); } catch (_) {} enterAppDirect(); } }
+      const h = location.hash || '';
+      if (/access_token=/.test(h)){
+        const p = new URLSearchParams(h.replace(/^#/, ''));
+        const tok = p.get('access_token');
+        if (tok){
+          const claims = decodeJwt(tok);
+          saveSession({ access_token: tok, user: { id: claims.sub, email: claims.email, user_metadata: claims.user_metadata || {} } });
+          try { localStorage.setItem('melon_refresh', p.get('refresh_token') || ''); } catch (_) {}
+          try { history.replaceState(null, '', location.origin + location.pathname); } catch (_) {}
+          enterAppDirect();
+        }
+      } else if (/error=/.test(h)){
+        try { history.replaceState(null, '', location.origin + location.pathname); } catch (_) {}
+        try { toast('Sign-in was canceled'); } catch (_) {}
+      }
     } catch (_) {}
-    try { sb.auth.onAuthStateChange((_evt, session) => {
-      if (session){ saveSession(session); if (auth.classList.contains('active')) enterAppDirect(); }
-      else { try { localStorage.removeItem('melon_token'); localStorage.removeItem('melon_user'); } catch (_) {} }
-    }); } catch (_) {}
   }
   // social buttons → real OAuth; email/password submit keeps the existing flow for now
   auth.querySelectorAll('.social-btn').forEach(b => {
@@ -3327,42 +3359,39 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function __fv(pane, sel){ const el = pane.querySelector(sel); return el ? el.value.trim() : ''; }
   function __busy(btn, on, label){ if (!btn) return; if (on){ btn.dataset._t = btn.dataset._t || btn.textContent; btn.textContent = 'Please wait…'; btn.disabled = true; btn.style.opacity = '.7'; } else { btn.textContent = label || btn.dataset._t || btn.textContent; btn.disabled = false; btn.style.opacity = ''; } }
   async function emailLogin(pane, btn){
-    const email = __fv(pane, 'input[type=email]');
-    const passEl = pane.querySelector('input[type=password]'); const pass = passEl ? passEl.value : '';
+    const email = __fv(pane, 'input[type=email], input[autocomplete="email"]');
+    const passEl = pane.querySelector('input[autocomplete="current-password"], input[autocomplete="new-password"]'); const pass = passEl ? passEl.value : '';
     if (!__emailRe.test(email)) { toast('Enter a valid email'); return; }
     if (!pass) { toast('Enter your password'); return; }
-    const sb = await getSB(); if (!sb) { toast('Sign-in unavailable — check your connection'); return; }
     __busy(btn, true);
     try {
-      const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-      if (error) { toast(error.message || 'Login failed'); __busy(btn, false, 'Log in'); return; }
-      if (data && data.session) { saveSession(data.session); toast('Welcome back'); enterAppDirect(); }
-      else { toast('Could not sign in'); __busy(btn, false, 'Log in'); }
-    } catch (e) { toast('Login failed'); __busy(btn, false, 'Log in'); }
+      const { ok, data } = await authFetch('/token?grant_type=password', { email, password: pass });
+      if (!ok || !data.access_token) { const m = authErr(data); toast(m === 'Invalid login credentials' ? 'Wrong email or password' : m); __busy(btn, false, 'Log in'); return; }
+      try { localStorage.setItem('melon_refresh', data.refresh_token || ''); } catch (_) {}
+      saveSession(data); toast('Welcome back'); enterAppDirect();
+    } catch (e) { toast('Login failed — check your connection'); __busy(btn, false, 'Log in'); }
   }
   async function emailSignup(pane, btn){
-    const name = __fv(pane, 'input[type=text]');
-    const email = __fv(pane, 'input[type=email]');
-    const passEl = pane.querySelector('input[type=password]'); const pass = passEl ? passEl.value : '';
+    const name = __fv(pane, 'input[autocomplete="name"]');
+    const email = __fv(pane, 'input[type=email], input[autocomplete="email"]');
+    const passEl = pane.querySelector('input[autocomplete="new-password"], input[autocomplete="current-password"]'); const pass = passEl ? passEl.value : '';
     if (!name) { toast('Enter your full name'); return; }
     if (!__emailRe.test(email)) { toast('Enter a valid email'); return; }
     if ((pass || '').length < 8) { toast('Password must be at least 8 characters'); return; }
-    const sb = await getSB(); if (!sb) { toast('Sign-up unavailable — check your connection'); return; }
     __busy(btn, true);
     try {
-      const { data, error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name }, emailRedirectTo: location.origin + location.pathname } });
-      if (error) { toast(error.message || 'Sign-up failed'); __busy(btn, false, 'Sign up'); return; }
-      if (data && data.session) { saveSession(data.session); toast('Account created'); enterAppDirect(); }
+      const { ok, data } = await authFetch('/signup', { email, password: pass, data: { full_name: name } });
+      if (!ok) { toast(authErr(data)); __busy(btn, false, 'Sign up'); return; }
+      if (data.access_token) { try { localStorage.setItem('melon_refresh', data.refresh_token || ''); } catch (_) {} saveSession(data); toast('Account created'); enterAppDirect(); }
       else { toast('Almost there — check your email to confirm your account'); __busy(btn, false, 'Sign up'); }
-    } catch (e) { toast('Sign-up failed'); __busy(btn, false, 'Sign up'); }
+    } catch (e) { toast('Sign-up failed — check your connection'); __busy(btn, false, 'Sign up'); }
   }
   async function resetPassword(pane){
     const email = __fv(pane, 'input[type=email]');
     if (!__emailRe.test(email)) { toast('Enter your email above first'); return; }
-    const sb = await getSB(); if (!sb) { toast('Unavailable — check your connection'); return; }
-    try { const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
-      toast(error ? (error.message || 'Could not send reset') : 'Password reset email sent'); }
-    catch (e) { toast('Could not send reset'); }
+    try { const { ok, data } = await authFetch('/recover', { email });
+      toast(ok ? 'Password reset email sent' : authErr(data)); }
+    catch (e) { toast('Could not send reset — check your connection'); }
   }
   auth.querySelectorAll('.auth-pane').forEach(pane => {
     const submit = pane.querySelector('.auth-submit');
@@ -3373,6 +3402,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     pane.querySelectorAll('input').forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); if (submit) submit.click(); } }));
   });
   initAuthSession();
+  try { updateUserChip(); } catch (_) {}
   document.getElementById('authBack').addEventListener('click', () => {
     auth.classList.remove('active');
     onboarding.style.display = 'none';
@@ -3690,6 +3720,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     input.value = ''; autosize();
     startGenerating();
     const ref = addAiDoc();
+    if (maybeOrionGenerate(ref, text)) return;
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
 
@@ -3826,6 +3857,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     addUserMsg(text);
     startGenerating();
     const ref = addAiDoc();
+    if (maybeOrionGenerate(ref, text)) return;
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
   function welcomeSubmit(){ const t = welcomeInput.value.trim(); if (!t) return; welcomeInput.value = ''; welcomeInput.style.height = 'auto'; welcomeSend(t); wcAttached = []; renderWcFiles(); }
@@ -4050,10 +4082,157 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     updateComposerPlaceholder();
   }
   function updateComposerPlaceholder(){
-    const ph = activeModel === 'methel' ? 'Ask Anything…' : "Describe what you'd like to build…";
+    let ph = activeModel === 'methel' ? 'Ask Anything…' : "Describe what you'd like to build…";
+    if (activeModel === 'orion'){
+      var om = (typeof orionMode !== 'undefined') ? orionMode : 'image';
+      ph = om === 'image' ? 'Describe the image to generate…'
+        : om === 'video' ? 'Describe the video to generate…'
+        : om === 'slides' ? 'What should the slides cover?'
+        : om === 'sheet' ? 'Describe the spreadsheet you need…'
+        : om === 'doc' ? 'Describe the document to write…'
+        : 'Ask Orion anything…';
+    }
     if (input) input.placeholder = ph;
     if (welcomeInput) welcomeInput.placeholder = ph;
+    if (typeof syncOrionBars === 'function') syncOrionBars();
   }
+
+  /* =====================================================================
+     ORION GENERATION — routes Orion to the media (image/video) and docgen
+     (slides/sheet/doc) edge functions. Office docs use a 2-step flow: the
+     LLM turns the prompt into structured data, then docgen builds the file.
+     ===================================================================== */
+  const ORION_MODES = [['chat','Chat'],['image','Image'],['video','Video'],['slides','Slides'],['sheet','Sheet'],['doc','Doc']];
+  var orionMode = (function(){ try { return localStorage.getItem('melon_orion_mode') || 'image'; } catch(e){ return 'image'; } })();
+  var orionBars = [];
+  function fnBase(){ var m = (API_URL || '').match(/^(.*\/functions\/v1)(?:\/|$)/); return (m && m[1]) || ROUTER_DEFAULT.replace(/\/ai-router$/, ''); }
+  function fnUrl(name){ return fnBase() + '/' + name; }
+  function fnHeaders(){ return Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}); }
+  function imgModel(){ try { return localStorage.getItem('melon_img_model') || 'black-forest-labs/flux-schnell'; } catch(e){ return 'black-forest-labs/flux-schnell'; } }
+  function vidModel(){ try { return localStorage.getItem('melon_vid_model') || 'minimax/video-01'; } catch(e){ return 'minimax/video-01'; } }
+  function titleFrom(p){ return (p || 'Untitled').replace(/\s+/g, ' ').trim().slice(0, 60); }
+
+  function maybeOrionGenerate(ref, prompt){
+    if (activeModel !== 'orion' || orionMode === 'chat') return false;
+    orionGenerate(ref, prompt, orionMode);
+    return true;
+  }
+  function orionGenerate(ref, prompt, mode){
+    if (mode === 'image' || mode === 'video') return genMedia(ref, mode, prompt);
+    return genDoc(ref, mode, prompt);
+  }
+  function orionStatus(ref, msg){
+    if (ref.stages) ref.stages.innerHTML = '<span class="gen-think">' + esc(msg) + '</span><span class="gen-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+  }
+  function orionDone(ref){ if (ref.stages && ref.stages.parentNode) ref.stages.remove(); finishGenerating(); keepScroll(); }
+  function orionError(ref, msg){
+    if (ref.stages && ref.stages.parentNode) ref.stages.remove();
+    ref.body.innerHTML = '<p style="color:#ff9a9a">⚠️ ' + esc(String(msg)) + '</p>';
+    finishGenerating(); keepScroll();
+  }
+  function dlRow(url, name){ return '<div style="margin-top:8px"><a href="' + url + '" download="' + esc(name) + '" target="_blank" rel="noopener" style="color:#A88DFF;font-size:13px;text-decoration:none">⬇ Download</a></div>'; }
+  function docCard(name, url, kind){
+    return '<div style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid rgba(168,141,255,.3);border-radius:14px;background:rgba(109,94,248,.08)">'
+      + '<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#6D5EF8,#A88DFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px">' + esc((kind || '').toUpperCase()) + '</div>'
+      + '<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(name) + '</div><div style="font-size:12px;opacity:.6">Ready to download</div></div>'
+      + '<a href="' + url + '" download="' + esc(name) + '" target="_blank" rel="noopener" style="padding:8px 14px;border-radius:10px;background:#6D5EF8;color:#fff;font-size:13px;text-decoration:none;font-weight:600">Download</a></div>';
+  }
+
+  async function genMedia(ref, type, prompt){
+    orionStatus(ref, type === 'video' ? 'Generating video — this can take up to a minute' : 'Generating image');
+    try {
+      const r = await fetch(fnUrl('media'), { method: 'POST', headers: fnHeaders(), body: JSON.stringify({ type: type, prompt: prompt, model: type === 'video' ? vidModel() : imgModel() }) });
+      const d = await r.json();
+      if (!generating) { if (ref.el) ref.el.remove(); return; }
+      if (!r.ok || d.error) return orionError(ref, d.error || ('HTTP ' + r.status));
+      if (ref.stages && ref.stages.parentNode) ref.stages.remove();
+      if (type === 'video') ref.body.innerHTML = '<video controls playsinline style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '"></video>' + dlRow(d.url, 'video.mp4');
+      else ref.body.innerHTML = '<img alt="' + esc(prompt) + '" style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '">' + dlRow(d.url, 'image.png');
+      convAddMsg('assistant', '[' + (type === 'video' ? 'Generated video' : 'Generated image') + '](' + d.url + ')');
+      orionDone(ref);
+    } catch(e){ orionError(ref, 'Generation failed. ' + (e && e.message ? e.message : e)); }
+  }
+
+  async function routerCall(system, user){
+    const r = await fetch(API_URL, { method: 'POST', headers: fnHeaders(), body: JSON.stringify({ melonModel: 'core-45', model: 'claude-sonnet-4-6', system: system, messages: [{ role: 'user', content: user }], max_tokens: 1500 }) });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return (parseReply(await r.json()) || '').trim();
+  }
+  async function routerJSON(system, user){
+    let t = await routerCall(system, user);
+    t = t.replace(/^```(?:json)?/i, '').replace(/```$/,'').trim();
+    const s = t.search(/[\[{]/); if (s > 0) t = t.slice(s);
+    const e = Math.max(t.lastIndexOf(']'), t.lastIndexOf('}')); if (e > -1) t = t.slice(0, e + 1);
+    try { return JSON.parse(t); } catch(_){ return null; }
+  }
+
+  async function genDoc(ref, mode, prompt){
+    const MAP = { slides: { kind: 'pptx', label: 'slides' }, sheet: { kind: 'xlsx', label: 'spreadsheet' }, doc: { kind: 'docx', label: 'document' } };
+    const m = MAP[mode]; if (!m) return orionError(ref, 'Unknown generation type.');
+    try {
+      const docBody = { kind: m.kind, title: titleFrom(prompt) };
+      orionStatus(ref, 'Planning your ' + m.label);
+      if (mode === 'slides'){
+        const j = await routerJSON('You create concise slide decks. Return ONLY a JSON array of 4-8 slides, each {"title":string,"bullets":[string,...]}. No commentary, no code fences.', prompt);
+        const slides = Array.isArray(j) ? j : (j && j.slides) || [];
+        if (!slides.length) return orionError(ref, 'Could not build slides from that prompt. Try rephrasing.');
+        docBody.slides = slides;
+      } else if (mode === 'sheet'){
+        const j = await routerJSON('You create spreadsheets. Return ONLY JSON {"columns":[string,...],"rows":[[cell,...],...]}. No commentary, no code fences.', prompt);
+        const cols = (j && j.columns) || [], rows = (j && j.rows) || [];
+        if (!cols.length && !rows.length) return orionError(ref, 'Could not build a sheet from that prompt. Try rephrasing.');
+        docBody.rows = [cols].concat(rows);
+      } else {
+        const md = await routerCall('Write the requested document in clean GitHub-flavoured markdown. Start with a single # title line, then use ## for sections.', prompt);
+        if (!md) return orionError(ref, 'Could not generate the document.');
+        docBody.content = md;
+      }
+      if (!generating) { if (ref.el) ref.el.remove(); return; }
+      orionStatus(ref, 'Building your ' + m.label);
+      const r = await fetch(fnUrl('docgen'), { method: 'POST', headers: fnHeaders(), body: JSON.stringify(docBody) });
+      const d = await r.json();
+      if (!generating) { if (ref.el) ref.el.remove(); return; }
+      if (!r.ok || d.error) return orionError(ref, d.error || ('HTTP ' + r.status));
+      if (ref.stages && ref.stages.parentNode) ref.stages.remove();
+      ref.body.innerHTML = docCard(d.name || m.kind, d.url, m.kind);
+      convAddMsg('assistant', '[Download ' + (d.name || m.kind) + '](' + d.url + ')');
+      orionDone(ref);
+    } catch(e){ orionError(ref, 'Generation failed. ' + (e && e.message ? e.message : e)); }
+  }
+
+  // ---- Orion mode chips (shown above each composer when Orion is active) ----
+  function buildOrionBar(anchorEl){
+    if (!anchorEl || !anchorEl.parentNode) return;
+    const bar = document.createElement('div'); bar.className = 'orion-bar';
+    bar.style.cssText = 'display:none;gap:8px;padding:8px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch';
+    ORION_MODES.forEach(function(pair){
+      const c = document.createElement('button'); c.type = 'button'; c.className = 'orion-chip'; c.dataset.mode = pair[0]; c.textContent = pair[1];
+      c.style.cssText = 'flex:0 0 auto;padding:6px 14px;border-radius:999px;border:1px solid rgba(168,141,255,.35);background:transparent;color:#cfc9ff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap';
+      c.addEventListener('click', function(){ setOrionMode(pair[0]); });
+      bar.appendChild(c);
+    });
+    anchorEl.parentNode.insertBefore(bar, anchorEl);
+    orionBars.push(bar);
+  }
+  function setOrionMode(mode){
+    orionMode = mode; try { localStorage.setItem('melon_orion_mode', mode); } catch(e){}
+    updateComposerPlaceholder();
+  }
+  function syncOrionBars(){
+    const show = activeModel === 'orion';
+    orionBars.forEach(function(bar){
+      bar.style.display = show ? 'flex' : 'none';
+      bar.querySelectorAll('.orion-chip').forEach(function(c){
+        const on = c.dataset.mode === orionMode;
+        c.style.background = on ? 'linear-gradient(135deg,#6D5EF8,#A88DFF)' : 'transparent';
+        c.style.color = on ? '#fff' : '#cfc9ff';
+        c.style.borderColor = on ? 'transparent' : 'rgba(168,141,255,.35)';
+      });
+    });
+  }
+  buildOrionBar(document.querySelector('.composer'));
+  buildOrionBar(document.querySelector('.welcome .wc-box'));
+  syncOrionBars();
 
   function openMenu(){
     mdlMenu.classList.add('open');
@@ -4531,8 +4710,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
 
     // ---- danger zone ----
     function signOut(){
-      try { localStorage.removeItem('melon_token'); localStorage.removeItem('melon_user'); } catch (e) {}
-      try { if (typeof getSB === 'function') getSB().then(sb => { if (sb) sb.auth.signOut(); }); } catch (e) {}
+      try {
+        const tok = localStorage.getItem('melon_token');
+        if (tok && typeof AUTH_BASE === 'string') fetch(AUTH_BASE + '/logout', { method: 'POST', headers: { 'apikey': SB_ANON, 'authorization': 'Bearer ' + tok } }).catch(() => {});
+      } catch (e) {}
+      try { localStorage.removeItem('melon_token'); localStorage.removeItem('melon_user'); localStorage.removeItem('melon_refresh'); } catch (e) {}
+      try { updateUserChip(); } catch (e) {}
       profile.classList.remove('active');
       if (typeof closeSb === 'function') closeSb();
       if (typeof openAuth === 'function') openAuth('login');
@@ -4606,6 +4789,39 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       title: 'Gate Key (x-melon-key)', value: '', placeholder: 'Paste your GATE_SECRET',
       onSave: v => { lsSet('melon_gate', v.trim()); refresh(); toast('Gate key saved'); }
     }));
+    const diagRow = document.getElementById('beDiagRow');
+    const diagSub = document.getElementById('beDiagSub');
+    const diagResult = document.getElementById('beDiagResult');
+    if (diagRow) diagRow.addEventListener('click', async () => {
+      diagSub.textContent = 'Running…'; diagResult.style.display = 'none';
+      try {
+        const ep = lsGet('melon_endpoint') || ROUTER_DEFAULT;
+        const gate = lsGet('melon_gate') || GATE_DEFAULT;
+        const headers = Object.assign({ 'Content-Type': 'application/json' }, gate ? { 'x-melon-key': gate } : {});
+        const tok = lsGet('melon_token'); if (tok) headers['Authorization'] = 'Bearer ' + tok;
+        const r = await fetch(ep, { method: 'POST', headers, body: JSON.stringify({ diagnostic: true }) });
+        const d = await r.json();
+        if (!r.ok || !d || d.error) throw new Error((d && d.error) || ('HTTP ' + r.status));
+        const detected = d.detected || [], missing = d.missing || [];
+        diagSub.textContent = detected.length + ' provider' + (detected.length === 1 ? '' : 's') + ' active';
+        const chip = (name, on) => '<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;margin:3px 5px 3px 0;border-radius:999px;border:1px solid ' + (on ? 'rgba(74,222,128,.4)' : 'rgba(255,120,120,.35)') + ';background:' + (on ? 'rgba(74,222,128,.12)' : 'rgba(255,120,120,.08)') + ';font-size:12px;color:' + (on ? '#7ee2a0' : '#ff9a9a') + '"><span style="width:7px;height:7px;border-radius:50%;background:' + (on ? '#4ade80' : '#ff7878') + '"></span>' + name + '</span>';
+        let html = '<div style="font-size:12px;opacity:.65;margin-bottom:6px">Provider keys detected by the backend</div><div>';
+        detected.forEach(n => html += chip(n, true));
+        missing.forEach(n => html += chip(n, false));
+        html += '</div>';
+        if (d.routes){
+          const ready = m => (d.routes[m] || []).some(x => x.configured);
+          html += '<div style="font-size:12px;opacity:.65;margin:12px 0 6px">Model readiness</div><div>';
+          [['methel','Methel'],['core-45','Core-45'],['forge','Forge'],['orion','Orion']].forEach(([id,lbl]) => { html += chip(lbl, ready(id)); });
+          html += '</div>';
+        }
+        diagResult.innerHTML = html; diagResult.style.display = 'block';
+      } catch (e){
+        diagSub.textContent = 'Check failed';
+        diagResult.style.display = 'block';
+        diagResult.innerHTML = '<div style="font-size:13px;color:#ff9a9a">⚠️ ' + String(e.message || e) + '</div><div style="font-size:12px;opacity:.6;margin-top:6px">Runs only on the deployed site (not the in-app preview), with your gate key set.</div>';
+      }
+    });
   })();
 
   document.getElementById('interfaceBack').addEventListener('click', () => interfaceP.classList.remove('active'));
@@ -4699,6 +4915,35 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     syncBilled();
   }));
   syncBilled();
+
+  // ---- subscribe via Stripe Checkout ----
+  const planContinue = document.getElementById('planContinue');
+  if (planContinue) planContinue.addEventListener('click', async () => {
+    const selPlan = plans.querySelector('.ps-plan.sel');
+    const plan = selPlan ? (selPlan.dataset.plan || 'pro') : 'pro';
+    if (!MELON_TOKEN()) { toast('Please sign in to subscribe'); if (typeof openAuth === 'function') openAuth('login'); return; }
+    const url = API_URL.replace(/\/ai-router\/?$/, '/billing') + '/checkout';
+    const orig = planContinue.innerHTML; planContinue.disabled = true; planContinue.style.opacity = '.7';
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}),
+        body: JSON.stringify({ plan, cycle: (plans.dataset.bill === 'yearly' ? 'yearly' : 'monthly') })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) { location.href = data.url; return; }
+      toast(data.error || 'Could not start checkout');
+    } catch (e) { toast('Could not reach billing'); }
+    planContinue.disabled = false; planContinue.style.opacity = ''; planContinue.innerHTML = orig;
+  });
+  (function checkoutReturn(){
+    try {
+      const q = new URLSearchParams(location.search); const c = q.get('checkout');
+      if (c === 'success') toast('Subscription active — welcome aboard!');
+      else if (c === 'cancel') toast('Checkout canceled');
+      if (c) { try { history.replaceState(null, '', location.origin + location.pathname); } catch (_) {} }
+    } catch (_) {}
+  })();
 
   // ---- choice bottom sheet (shared: theme + default model) ----
   const csScrim = document.getElementById('csScrim');
@@ -4848,7 +5093,18 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       rowsByLabel(settingsEl, '.st-row', '.st-rtitle', 'Subscription').forEach(r => { const s = r.querySelector('.st-rsub'); if (s) s.textContent = name + ' Plan'; });
       if (plansEl) plansEl.classList.remove('active');
     });
-    if (plansEl){ const restore = plansEl.querySelector('.ps-restore'); if (restore) restore.addEventListener('click', () => toast('Purchases restored')); }
+    if (plansEl){ const manage = plansEl.querySelector('.ps-restore'); if (manage) manage.addEventListener('click', async () => {
+      if (!MELON_TOKEN()) { toast('Please sign in first'); if (typeof openAuth === 'function') openAuth('login'); return; }
+      const url = API_URL.replace(/\/ai-router\/?$/, '/billing') + '/portal';
+      const orig = manage.textContent; manage.textContent = 'Opening…'; manage.style.opacity = '.7';
+      try {
+        const res = await fetch(url, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}), body: '{}' });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.url) { location.href = data.url; return; }
+        toast(data.error || 'Could not open billing portal');
+      } catch (e) { toast('Could not reach billing'); }
+      manage.textContent = orig; manage.style.opacity = '';
+    }); }
 
     // ---------- PROJECTS ----------
     function newProject(){ openEdit({ title: 'New Project', placeholder: 'Project name', onSave: v => { if (v) toast('Project "' + v + '" created'); } }); }
