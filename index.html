@@ -1604,6 +1604,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           <div class="st-rtext"><div class="st-rtitle">Gate Key</div><div class="st-rsub" id="beGateSub">Not set</div></div>
           <div class="st-trail"><span class="st-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
         </div>
+        <div class="st-row" id="beAdminRow">
+          <div class="st-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 7.7 8 10 4.6-2.3 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <div class="st-rtext"><div class="st-rtitle">Admin / Dev key</div><div class="st-rsub" id="beAdminSub">Not set</div></div>
+          <div class="st-trail"><span class="st-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span></div>
+        </div>
         <div class="st-row" id="beDiagRow">
           <div class="st-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
           <div class="st-rtext"><div class="st-rtitle">Run diagnostics</div><div class="st-rsub" id="beDiagSub">Check which AI provider keys are active</div></div>
@@ -2995,7 +3000,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           </div>
           <div class="ps-plan-feats">
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Everything in Free</div>
-            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>All AI models — chat, code &amp; documents</div>
+            <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>All AI chat, code &amp; document models</div>
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Up to 1,500 messages per day</div>
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Image &amp; document generation (Word, Excel, PPT)</div>
             <div class="ps-pf"><svg class="chk-pro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>Priority response speed</div>
@@ -3076,7 +3081,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         <div class="mo"><div class="ps-cont-main">Continue</div></div>
         <div class="yr"><div class="ps-cont-main">Continue with Yearly Plan</div><div class="ps-cont-sub">Billed <span id="billedAmt">R1,990</span> today</div></div>
       </button>
-      <button class="ps-restore" id="manageSub">Manage Subscription</button>
+      <button class="ps-restore" id="manageSub">Cancel Subscription</button>
     </div>
   </div>
 
@@ -3164,6 +3169,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="ws-head">
     <button class="ws-back" id="wsBack" aria-label="Back to chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
     <div class="ws-ttl"><b id="wsTitle">Preview</b><small><span class="ws-dot"></span><span id="wsStatus">Building…</span></small></div>
+    <button id="wsEdit" aria-label="Edit in chat" style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;margin-right:8px;border-radius:10px;border:1px solid rgba(168,141,255,.4);background:linear-gradient(135deg,#6D5EF8,#A88DFF);color:#fff;font-size:13px;font-weight:600;cursor:pointer"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit</button>
     <div class="ws-dev" id="wsDev">
       <button data-dev="desktop" class="on" aria-label="Desktop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg></button>
       <button data-dev="mobile" aria-label="Mobile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></button>
@@ -3188,9 +3194,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </div>
   </div>
   <div class="ws-foot">
-    <button class="act" id="wsOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Open</button>
+    <button class="act" id="wsCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
     <button class="act" id="wsDownload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 19h16"/></svg>Download</button>
-    <button class="act primary" id="wsSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Save to Assets</button>
+    <button class="act primary" id="wsSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Save</button>
   </div>
 </div>
 
@@ -3315,12 +3321,14 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         const r = await fetch(SB_AUTH_URL + '/rest/v1/profiles?id=eq.' + encodeURIComponent(user.id) + '&select=plan,display_name', { headers: { apikey: SB_ANON, authorization: 'Bearer ' + token } });
         if (r.ok){ const a = await r.json(); const p = a && a[0];
           if (p){ if (up) up.textContent = PLAN_LABEL[p.plan] || 'Free Plan';
-            if (un && p.display_name) un.textContent = p.display_name; } }
+            if (un && p.display_name) un.textContent = p.display_name;
+            try { window.__melonSetPlan && window.__melonSetPlan(p.plan || 'free'); } catch (_) {} } }
       } catch (_) {}
     } else {
       if (un) un.textContent = 'Guest User';
       if (av) av.textContent = 'G';
       if (up) up.textContent = 'Free Plan';
+      try { window.__melonSetPlan && window.__melonSetPlan('guest'); } catch (_) {}
     }
   }
   function oauthLogin(provider){
@@ -3460,10 +3468,25 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function esc(s){ return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
   function nearBottom(){ return curScroll.scrollHeight - curScroll.scrollTop - curScroll.clientHeight < 150; }
   function keepScroll(force){ if (force || nearBottom()) curScroll.scrollTop = curScroll.scrollHeight; }
+  function uCopy(t){ try { navigator.clipboard.writeText(t); } catch(e){ const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(_){} ta.remove(); } }
+  function resendText(text){
+    if (generating || !text) return;
+    if (input){ input.value = text; if (typeof autosize === 'function') autosize(); }
+    doSend();
+  }
+  const U_COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const U_RESEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>';
   function addUserMsg(text){
     const m = document.createElement('div'); m.className = 'msg user';
     m.innerHTML = '<div class="msg-av">M</div><div class="bubble">' + esc(text) + '</div>';
-    curThread.appendChild(m); keepScroll(true); return m;
+    curThread.appendChild(m);
+    const acts = document.createElement('div'); acts.className = 'u-acts';
+    acts.style.cssText = 'display:flex;gap:6px;justify-content:flex-end;margin:2px 46px 6px 0';
+    const mk = (label, svg, fn) => { const b = document.createElement('button'); b.type = 'button'; b.title = label; b.setAttribute('aria-label', label); b.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:transparent;color:#9b95c9;cursor:pointer'; b.innerHTML = svg; b.querySelector('svg').style.width = '15px'; b.querySelector('svg').style.height = '15px'; b.addEventListener('click', fn); return b; };
+    acts.appendChild(mk('Copy', U_COPY_ICON, () => { uCopy(text); toast('Copied'); }));
+    acts.appendChild(mk('Resend', U_RESEND_ICON, () => resendText(text)));
+    curThread.appendChild(acts);
+    keepScroll(true); return m;
   }
 
   // ---- lightweight markdown ----
@@ -3586,13 +3609,14 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   const GATE_DEFAULT = 'melon_K9pQ2vXr7TmW4cZ8nB3yLdF6gH1jS5aRtE0uN';
   const GATE_KEY = () => { try { return localStorage.getItem('melon_gate') || GATE_DEFAULT; } catch (e) { return GATE_DEFAULT; } };
   const MELON_TOKEN = () => { try { return localStorage.getItem('melon_token') || ''; } catch (e) { return ''; } };
+  const ADMIN_KEY = () => { try { return localStorage.getItem('melon_admin') || ''; } catch (e) { return ''; } };
 
   // Per-model behaviour so the model switcher actually changes the answers.
   const MODEL_MAP = {
-    'methel':  { backend: 'claude-haiku-4-5',  persona: 'You are Methel — fast and concise. Keep replies tight and quick.' },
-    'core-45': { backend: 'claude-sonnet-4-6', persona: 'You are Core-45 — a balanced, friendly everyday assistant.' },
-    'forge':   { backend: 'claude-sonnet-4-6', persona: 'You are Forge — a coding and development specialist. Prefer correct, well-formatted code with brief, useful explanations.' },
-    'orion':   { backend: 'claude-opus-4-8',   persona: 'You are Orion — advanced reasoning and research. Think carefully and structure thorough, well-organised answers.' }
+    'methel':  { backend: 'claude-haiku-4-5',  maxTokens: 1024, persona: 'You are Methel — fast and concise. Keep replies tight and quick.' },
+    'core-45': { backend: 'claude-sonnet-4-6', maxTokens: 4096, persona: 'You are Core-45 — a coding and debugging specialist. Prefer correct, complete, well-formatted code. When asked to build a page or app, output a single complete, self-contained file.' },
+    'forge':   { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Forge — a coding and development specialist. Always return COMPLETE, runnable code in a single fenced block. For websites, output one full self-contained index.html including <!doctype html>, <head> with all <style>, and a complete <body> — never truncate or abbreviate.' },
+    'orion':   { backend: 'claude-opus-4-8',   maxTokens: 2048, persona: 'You are Orion — advanced reasoning and research. Think carefully and structure thorough, well-organised answers.' }
   };
   const SYS_BASE = "You are Melon Studio, a helpful AI assistant. Reply in clean GitHub-flavoured markdown — use headings, **bold**, lists, tables, and fenced code blocks where they help.";
   function activeBackendModel(){ return MODEL_MAP[activeModel] || MODEL_MAP['core-45']; }
@@ -3720,6 +3744,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     input.value = ''; autosize();
     startGenerating();
     const ref = addAiDoc();
+    if (maybeEditFlow(ref, text)) return;
     if (maybeOrionGenerate(ref, text)) return;
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
@@ -3737,13 +3762,13 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
-        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}),
+        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}),
         body: JSON.stringify({
           model: mdl.backend,
           melonModel: activeModel,
           system: systemPrompt(),
           messages: history,
-          max_tokens: 1024,
+          max_tokens: mdl.maxTokens || 1024,
           stream: false,
           conversation_id: (current && current.id) || undefined,
           apiKey: (window.__melonNextKey && window.__melonNextKey('anthropic')) || undefined
@@ -3857,6 +3882,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     addUserMsg(text);
     startGenerating();
     const ref = addAiDoc();
+    if (maybeEditFlow(ref, text)) return;
     if (maybeOrionGenerate(ref, text)) return;
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
@@ -4055,10 +4081,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       btn.setAttribute('aria-checked', on ? 'true' : 'false');
       btn.setAttribute('aria-label', m.name + ' — ' + m.desc);
       btn.tabIndex = on ? 0 : -1;
+      const locked = (typeof modelAllowed === 'function') && !modelAllowed(m.id);
       btn.innerHTML = '<span class="mdl-radio" aria-hidden="true"></span>'
-        + '<span class="mdl-tx"><span class="mdl-name">' + m.name + '<span class="mdl-dot" aria-hidden="true"></span></span>'
-        + '<span class="mdl-desc">' + m.desc + '</span></span>';
-      btn.addEventListener('click', () => { selectModel(m.id); closeMenu(true); });
+        + '<span class="mdl-tx"><span class="mdl-name">' + m.name + '<span class="mdl-dot" aria-hidden="true"></span>' + (locked ? '<span class="mdl-lock" aria-hidden="true" style="margin-left:6px;font-size:11px;opacity:.7">🔒</span>' : '') + '</span>'
+        + '<span class="mdl-desc">' + m.desc + (locked ? ' · ' + (typeof planNeededForModel === 'function' ? planNeededForModel(m.id) : 'Pro') + ' plan' : '') + '</span></span>';
+      if (locked) btn.classList.add('mdl-locked');
+      btn.addEventListener('click', () => { if (locked){ requireUpgrade(m.name, planNeededForModel(m.id)); closeMenu(true); return; } selectModel(m.id); closeMenu(true); });
       btn.addEventListener('keydown', e => onModelKey(e, i));
       mdlMenu.appendChild(btn);
     });
@@ -4105,15 +4133,53 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   const ORION_MODES = [['chat','Chat'],['image','Image'],['video','Video'],['slides','Slides'],['sheet','Sheet'],['doc','Doc']];
   var orionMode = (function(){ try { return localStorage.getItem('melon_orion_mode') || 'image'; } catch(e){ return 'image'; } })();
   var orionBars = [];
+
+  // ---- plan capabilities (gates models + Orion modes to match each plan's card) ----
+  const PLAN_CAPS = {
+    guest: { models: ['methel','core-45'], orionModes: [] },
+    free:  { models: ['methel','core-45'], orionModes: [] },
+    pro:   { models: ['methel','core-45','orion'], orionModes: ['chat','image','slides','sheet','doc'] },
+    max:   { models: ['methel','core-45','forge','orion'], orionModes: ['chat','image','video','slides','sheet','doc'] },
+    team:  { models: ['methel','core-45','forge','orion'], orionModes: ['chat','image','video','slides','sheet','doc'] }
+  };
+  var userPlan = (function(){ try { return localStorage.getItem('melon_plan') || (localStorage.getItem('melon_token') ? 'free' : 'guest'); } catch(e){ return 'guest'; } })();
+  function caps(){ if (ADMIN_KEY()) return PLAN_CAPS.team; return PLAN_CAPS[userPlan] || PLAN_CAPS.guest; }
+  function modelAllowed(id){ return caps().models.indexOf(id) > -1; }
+  function orionModeAllowed(m){ return m === 'chat' ? caps().orionModes.length > 0 : caps().orionModes.indexOf(m) > -1; }
+  function planNeededForModel(id){ return id === 'forge' ? 'Max' : 'Pro'; }
+  function planNeededForMode(m){ return m === 'video' ? 'Max' : 'Pro'; }
+  function modeLabel(m){ const x = ORION_MODES.find(function(p){ return p[0] === m; }); return x ? x[1] : m; }
+  function requireUpgrade(feature, plan){
+    try { toast(feature + ' is included in the ' + plan + ' plan — upgrade to unlock'); } catch(e){}
+    try { var t = document.getElementById('goPlans') || document.getElementById('openPlans') || document.getElementById('upgradeBtn'); if (t) t.click(); } catch(e){}
+  }
+  function applyPlanGates(){
+    try { if (typeof renderModels === 'function') renderModels(); } catch(e){}
+    if (!modelAllowed(activeModel)) { try { selectModel('methel'); } catch(e){ activeModel = 'methel'; } }
+    if (caps().orionModes.length && orionMode !== 'chat' && !orionModeAllowed(orionMode)) setOrionMode('image');
+    syncOrionBars();
+  }
+  if (typeof window !== 'undefined') window.__melonApplyPlanGates = applyPlanGates;
+  if (typeof window !== 'undefined') window.__melonSetPlan = function(plan){
+    userPlan = PLAN_CAPS[plan] ? plan : 'free';
+    try { localStorage.setItem('melon_plan', userPlan); } catch(e){}
+    applyPlanGates();
+  };
   function fnBase(){ var m = (API_URL || '').match(/^(.*\/functions\/v1)(?:\/|$)/); return (m && m[1]) || ROUTER_DEFAULT.replace(/\/ai-router$/, ''); }
   function fnUrl(name){ return fnBase() + '/' + name; }
-  function fnHeaders(){ return Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}); }
+  function fnHeaders(){ return Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}); }
   function imgModel(){ try { return localStorage.getItem('melon_img_model') || 'black-forest-labs/flux-schnell'; } catch(e){ return 'black-forest-labs/flux-schnell'; } }
   function vidModel(){ try { return localStorage.getItem('melon_vid_model') || 'minimax/video-01'; } catch(e){ return 'minimax/video-01'; } }
   function titleFrom(p){ return (p || 'Untitled').replace(/\s+/g, ' ').trim().slice(0, 60); }
 
   function maybeOrionGenerate(ref, prompt){
     if (activeModel !== 'orion' || orionMode === 'chat') return false;
+    if (!orionModeAllowed(orionMode)){
+      if (ref && ref.el) ref.el.remove();
+      finishGenerating();
+      requireUpgrade(modeLabel(orionMode) + ' generation', planNeededForMode(orionMode));
+      return true;
+    }
     orionGenerate(ref, prompt, orionMode);
     return true;
   }
@@ -4138,6 +4204,48 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       + '<a href="' + url + '" download="' + esc(name) + '" target="_blank" rel="noopener" style="padding:8px 14px;border-radius:10px;background:#6D5EF8;color:#fff;font-size:13px;text-decoration:none;font-weight:600">Download</a></div>';
   }
 
+  function miniMd(md){
+    const lines = String(md || '').split('\n'); let html = ''; let inList = false;
+    const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/`(.+?)`/g, '<code>$1</code>');
+    lines.forEach(function(ln){
+      if (/^###\s/.test(ln)){ if (inList){ html += '</ul>'; inList = false; } html += '<h3>' + fmt(ln.replace(/^###\s/, '')) + '</h3>'; }
+      else if (/^##\s/.test(ln)){ if (inList){ html += '</ul>'; inList = false; } html += '<h2>' + fmt(ln.replace(/^##\s/, '')) + '</h2>'; }
+      else if (/^#\s/.test(ln)){ if (inList){ html += '</ul>'; inList = false; } html += '<h1>' + fmt(ln.replace(/^#\s/, '')) + '</h1>'; }
+      else if (/^\s*[-*]\s/.test(ln)){ if (!inList){ html += '<ul>'; inList = true; } html += '<li>' + fmt(ln.replace(/^\s*[-*]\s/, '')) + '</li>'; }
+      else if (ln.trim() === ''){ if (inList){ html += '</ul>'; inList = false; } }
+      else { if (inList){ html += '</ul>'; inList = false; } html += '<p>' + fmt(ln) + '</p>'; }
+    });
+    if (inList) html += '</ul>';
+    return html;
+  }
+  function orionPreviewHtml(mode, payload){
+    const head = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b0b12}</style></head><body>';
+    const foot = '</body></html>';
+    if (mode === 'image') return head + '<div style="min-height:100vh;display:grid;place-items:center;padding:16px"><img style="max-width:100%;height:auto;border-radius:12px" src="' + payload + '"></div>' + foot;
+    if (mode === 'video') return head + '<div style="min-height:100vh;display:grid;place-items:center;padding:16px"><video controls playsinline style="max-width:100%;border-radius:12px" src="' + payload + '"></video></div>' + foot;
+    if (mode === 'slides'){
+      const body = (payload || []).map(function(s, i){
+        const bl = (s.bullets || []).map(function(b){ return '<li style="margin:7px 0">' + esc(b) + '</li>'; }).join('');
+        return '<section style="margin:0 auto 18px;max-width:860px;background:#fff;color:#15151f;border-radius:14px;padding:40px;box-shadow:0 10px 40px rgba(0,0,0,.35)"><div style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6D5EF8;font-weight:700">Slide ' + (i + 1) + '</div><h1 style="font-size:30px;margin:8px 0 18px">' + esc(s.title || '') + '</h1><ul style="font-size:18px;line-height:1.55;padding-left:22px;margin:0">' + bl + '</ul></section>';
+      }).join('');
+      return head + '<div style="padding:22px">' + body + '</div>' + foot;
+    }
+    if (mode === 'sheet'){
+      const trs = (payload || []).map(function(r, i){
+        const cells = (r || []).map(function(c){ return i === 0 ? '<th style="text-align:left;padding:11px 14px;background:#6D5EF8;color:#fff;font-weight:600;border:1px solid rgba(255,255,255,.18)">' + esc(String(c == null ? '' : c)) + '</th>' : '<td style="padding:10px 14px;border:1px solid #e6e4f2">' + esc(String(c == null ? '' : c)) + '</td>'; }).join('');
+        return '<tr>' + cells + '</tr>';
+      }).join('');
+      return head + '<div style="padding:22px;min-height:100vh"><table style="border-collapse:collapse;width:100%;max-width:980px;margin:0 auto;background:#fff;color:#15151f;border-radius:12px;overflow:hidden;font-size:14px;box-shadow:0 10px 40px rgba(0,0,0,.35)">' + trs + '</table></div>' + foot;
+    }
+    if (mode === 'doc'){
+      return head + '<div style="max-width:820px;margin:0 auto;padding:48px 30px;background:#fff;color:#1a1a24;min-height:100vh;line-height:1.65;box-shadow:0 0 60px rgba(0,0,0,.4)">' + miniMd(payload || '') + '</div>' + foot;
+    }
+    return head + foot;
+  }
+  function orionToPreview(mode, payload, title, fileLabel){
+    try { const html = orionPreviewHtml(mode, payload); if (window.__melonOpenWorkspace) window.__melonOpenWorkspace([{ name: fileLabel || 'preview.html', lang: 'html', code: html }], title || 'Orion preview'); } catch(e){}
+  }
+
   async function genMedia(ref, type, prompt){
     orionStatus(ref, type === 'video' ? 'Generating video — this can take up to a minute' : 'Generating image');
     try {
@@ -4149,6 +4257,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       if (type === 'video') ref.body.innerHTML = '<video controls playsinline style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '"></video>' + dlRow(d.url, 'video.mp4');
       else ref.body.innerHTML = '<img alt="' + esc(prompt) + '" style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '">' + dlRow(d.url, 'image.png');
       convAddMsg('assistant', '[' + (type === 'video' ? 'Generated video' : 'Generated image') + '](' + d.url + ')');
+      orionToPreview(type, d.url, titleFrom(prompt), type === 'video' ? 'video.html' : 'image.html');
       orionDone(ref);
     } catch(e){ orionError(ref, 'Generation failed. ' + (e && e.message ? e.message : e)); }
   }
@@ -4196,6 +4305,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       if (ref.stages && ref.stages.parentNode) ref.stages.remove();
       ref.body.innerHTML = docCard(d.name || m.kind, d.url, m.kind);
       convAddMsg('assistant', '[Download ' + (d.name || m.kind) + '](' + d.url + ')');
+      const pv = mode === 'slides' ? docBody.slides : mode === 'sheet' ? docBody.rows : docBody.content;
+      orionToPreview(mode, pv, docBody.title, (d.name || m.kind) + '.html');
       orionDone(ref);
     } catch(e){ orionError(ref, 'Generation failed. ' + (e && e.message ? e.message : e)); }
   }
@@ -4223,7 +4334,10 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     orionBars.forEach(function(bar){
       bar.style.display = show ? 'flex' : 'none';
       bar.querySelectorAll('.orion-chip').forEach(function(c){
-        const on = c.dataset.mode === orionMode;
+        const mode = c.dataset.mode;
+        const vis = mode === 'chat' ? true : orionModeAllowed(mode);
+        c.style.display = vis ? 'inline-flex' : 'none';
+        const on = mode === orionMode;
         c.style.background = on ? 'linear-gradient(135deg,#6D5EF8,#A88DFF)' : 'transparent';
         c.style.color = on ? '#fff' : '#cfc9ff';
         c.style.borderColor = on ? 'transparent' : 'rgba(168,141,255,.35)';
@@ -4232,7 +4346,62 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   }
   buildOrionBar(document.querySelector('.composer'));
   buildOrionBar(document.querySelector('.welcome .wc-box'));
-  syncOrionBars();
+  applyPlanGates();
+
+  /* ===== Vibe-edit loop: iterate on the live preview from chat ===== */
+  let editState = { on: false, title: '', code: '' };
+  const editBars = [];
+  function buildEditBar(anchorEl){
+    if (!anchorEl || !anchorEl.parentNode) return;
+    const bar = document.createElement('div'); bar.className = 'edit-bar';
+    bar.style.cssText = 'display:none;align-items:center;gap:10px;padding:9px 14px;margin:0 8px 6px;border-radius:12px;border:1px solid rgba(168,141,255,.4);background:rgba(109,94,248,.14)';
+    bar.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#A88DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>'
+      + '<span style="flex:1;font-size:13px;color:#cfc9ff;min-width:0">Editing <b class="edit-title" style="color:#fff">project</b> — describe a change</span>'
+      + '<button type="button" class="edit-x" aria-label="Done editing" style="background:transparent;border:0;color:#9b95c9;font-size:20px;line-height:1;cursor:pointer;padding:0 4px">&times;</button>';
+    bar.querySelector('.edit-x').addEventListener('click', disarmEdit);
+    anchorEl.parentNode.insertBefore(bar, anchorEl);
+    editBars.push(bar);
+  }
+  function showEditBars(){ editBars.forEach(function(b){ b.style.display = editState.on ? 'flex' : 'none'; const t = b.querySelector('.edit-title'); if (t) t.textContent = editState.title || 'project'; }); }
+  function disarmEdit(){ editState.on = false; showEditBars(); }
+  if (typeof window !== 'undefined') window.__melonArmEdit = function(title, code){
+    editState = { on: true, title: title || 'Project', code: code || '' };
+    showEditBars();
+    try { const inp = document.getElementById('input'); if (inp) inp.focus(); } catch(e){}
+    try { toast('Editing — describe a change to update the preview'); } catch(e){}
+  };
+  async function editCall(system, user){
+    const r = await fetch(API_URL, { method: 'POST', headers: fnHeaders(), body: JSON.stringify({ melonModel: 'core-45', model: 'claude-sonnet-4-6', system: system, messages: [{ role: 'user', content: user }], max_tokens: 8192 }) });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return (parseReply(await r.json()) || '').trim();
+  }
+  function maybeEditFlow(ref, prompt){
+    if (!editState.on) return false;
+    runEdit(ref, prompt);
+    return true;
+  }
+  async function runEdit(ref, prompt){
+    if (ref.stages) ref.stages.innerHTML = '<span class="gen-think">Applying your change</span><span class="gen-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+    const system = 'You are editing an existing single-file web project. Output the COMPLETE updated file in ONE fenced code block (```html ... ```). Keep everything that was not asked to change. No prose outside the code block.';
+    const user = 'Current file:\n```html\n' + editState.code + '\n```\n\nRequested change: ' + prompt + '\n\nReturn the full updated file.';
+    try {
+      const reply = await editCall(system, user);
+      if (!generating){ if (ref.el) ref.el.remove(); return; }
+      if (!reply || reply.indexOf('```') === -1){ if (ref.stages && ref.stages.parentNode) ref.stages.remove(); ref.body.innerHTML = '<p style="color:#ff9a9a">⚠️ Could not apply that change. Try rephrasing.</p>'; finishGenerating(); keepScroll(); return; }
+      if (ref.stages && ref.stages.parentNode) ref.stages.remove();
+      ref.body.innerHTML = '<p>✓ Updated the preview — opening it now.</p>';
+      convAddMsg('assistant', 'Updated the preview.');
+      finishGenerating(); keepScroll();
+      if (window.__melonRebuildFromReply) window.__melonRebuildFromReply(reply, editState.title);
+      try { const np = window.__melonCurrentProject && window.__melonCurrentProject(); if (np && np.code) editState.code = np.code; } catch(e){}
+    } catch(e){
+      if (ref.stages && ref.stages.parentNode) ref.stages.remove();
+      ref.body.innerHTML = '<p style="color:#ff9a9a">⚠️ Edit failed. ' + esc(e && e.message ? e.message : String(e)) + '</p>';
+      finishGenerating(); keepScroll();
+    }
+  }
+  buildEditBar(document.querySelector('.composer'));
+  buildEditBar(document.querySelector('.welcome .wc-box'));
 
   function openMenu(){
     mdlMenu.classList.add('open');
@@ -4771,11 +4940,13 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const lsSet = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
     const epSub = document.getElementById('beEndpointSub');
     const gateSub = document.getElementById('beGateSub');
+    const adminSub = document.getElementById('beAdminSub');
     function refresh(){
       const ep = lsGet('melon_endpoint');
       epSub.textContent = ep ? ep.replace(/^https?:\/\//, '').slice(0, 34) : 'AI Router (default)';
       const g = lsGet('melon_gate');
       gateSub.textContent = g ? '•••• set' : 'Not set';
+      if (adminSub) adminSub.textContent = lsGet('melon_admin') ? '•••• active — all features unlocked' : 'Not set';
     }
     refresh();
     const epRow = document.getElementById('beEndpointRow');
@@ -4788,6 +4959,11 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     if (gateRow) gateRow.addEventListener('click', () => openEdit({
       title: 'Gate Key (x-melon-key)', value: '', placeholder: 'Paste your GATE_SECRET',
       onSave: v => { lsSet('melon_gate', v.trim()); refresh(); toast('Gate key saved'); }
+    }));
+    const adminRow = document.getElementById('beAdminRow');
+    if (adminRow) adminRow.addEventListener('click', () => openEdit({
+      title: 'Admin / Dev key (x-melon-admin)', value: lsGet('melon_admin'), placeholder: 'Paste your ADMIN_SECRET to unlock all features',
+      onSave: v => { lsSet('melon_admin', v.trim()); refresh(); try { window.__melonApplyPlanGates && window.__melonApplyPlanGates(); } catch(e){} toast(v.trim() ? 'Admin mode on — all features unlocked' : 'Admin key cleared'); }
     }));
     const diagRow = document.getElementById('beDiagRow');
     const diagSub = document.getElementById('beDiagSub');
@@ -4922,12 +5098,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const selPlan = plans.querySelector('.ps-plan.sel');
     const plan = selPlan ? (selPlan.dataset.plan || 'pro') : 'pro';
     if (!MELON_TOKEN()) { toast('Please sign in to subscribe'); if (typeof openAuth === 'function') openAuth('login'); return; }
-    const url = API_URL.replace(/\/ai-router\/?$/, '/billing') + '/checkout';
+    const url = API_URL.replace(/\/ai-router\/?$/, '/payfast') + '/checkout';
     const orig = planContinue.innerHTML; planContinue.disabled = true; planContinue.style.opacity = '.7';
     try {
       const res = await fetch(url, {
         method: 'POST',
-        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}),
+        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}),
         body: JSON.stringify({ plan, cycle: (plans.dataset.bill === 'yearly' ? 'yearly' : 'monthly') })
       });
       const data = await res.json().catch(() => ({}));
@@ -5095,13 +5271,14 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     });
     if (plansEl){ const manage = plansEl.querySelector('.ps-restore'); if (manage) manage.addEventListener('click', async () => {
       if (!MELON_TOKEN()) { toast('Please sign in first'); if (typeof openAuth === 'function') openAuth('login'); return; }
-      const url = API_URL.replace(/\/ai-router\/?$/, '/billing') + '/portal';
-      const orig = manage.textContent; manage.textContent = 'Opening…'; manage.style.opacity = '.7';
+      if (!confirm('Cancel your subscription? Your plan will revert to Free.')) return;
+      const url = API_URL.replace(/\/ai-router\/?$/, '/payfast') + '/cancel';
+      const orig = manage.textContent; manage.textContent = 'Cancelling…'; manage.style.opacity = '.7';
       try {
-        const res = await fetch(url, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}), body: '{}' });
+        const res = await fetch(url, { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}), body: '{}' });
         const data = await res.json().catch(() => ({}));
-        if (res.ok && data.url) { location.href = data.url; return; }
-        toast(data.error || 'Could not open billing portal');
+        if (res.ok && data.ok) { toast('Subscription cancelled'); try { window.__melonSetPlan && window.__melonSetPlan('free'); } catch(_){} try { typeof updateUserChip === 'function' && updateUserChip(); } catch(_){} }
+        else toast(data.error || 'Could not cancel');
       } catch (e) { toast('Could not reach billing'); }
       manage.textContent = orig; manage.style.opacity = '';
     }); }
@@ -5320,6 +5497,11 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         let doc = html.code;
         if (!/<html[\s>]/i.test(doc)){
           doc = '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><scr' + 'ipt src="https://cdn.tailwindcss.com"></scr' + 'ipt><style>' + css + '</style></head><body>' + doc + (js ? '<scr' + 'ipt>' + js.code + '</scr' + 'ipt>' : '') + '</body></html>';
+        } else {
+          // close dangling tags if the model output was cut off, so the preview still renders
+          if (/<style[\s>]/i.test(doc) && !/<\/style>/i.test(doc)) doc += '\n</style>';
+          if (/<body[\s>]/i.test(doc) && !/<\/body>/i.test(doc)) doc += '\n</body>';
+          if (!/<\/html>/i.test(doc)) doc += '\n</html>';
         }
         return doc;
       }
@@ -5418,6 +5600,11 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       if (buildy && previewable) openWorkspace(files, wsTitleFromPrompt(prompt));
     }
     window.__melonMaybeWorkspace = maybeAutoWorkspace;
+    window.__melonOpenWorkspace = openWorkspace;
+    function wsPrimaryCode(){ const f = wsState.files.find(x => x.lang === 'html') || wsState.files[0]; return f ? f.code : (wsState.doc || ''); }
+    function wsAllCode(){ return wsState.files.length === 1 ? wsState.files[0].code : wsState.files.map(f => '/* ' + f.name + ' */\n' + f.code).join('\n\n'); }
+    window.__melonRebuildFromReply = (reply, title) => { const files = extractCodeFiles(reply); openWorkspace(files, title || wsState.title); };
+    window.__melonCurrentProject = () => ({ title: wsState.title, code: wsPrimaryCode(), files: wsState.files });
 
     document.getElementById('wsBack').addEventListener('click', closeWorkspace);
     document.getElementById('wsDev').addEventListener('click', e => {
@@ -5426,15 +5613,16 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       wsPrevWrap.classList.toggle('mobile', b.dataset.dev === 'mobile');
     });
     workspace.querySelectorAll('.ws-tab').forEach(t => t.addEventListener('click', () => setWsTab(t.dataset.wt)));
-    document.getElementById('wsOpen').addEventListener('click', () => {
-      try { const url = URL.createObjectURL(new Blob([wsState.doc], { type: 'text/html' })); window.open(url, '_blank'); setTimeout(() => URL.revokeObjectURL(url), 4000); }
-      catch (e) { toast('Open unavailable here'); }
+    document.getElementById('wsEdit').addEventListener('click', () => {
+      closeWorkspace();
+      try { if (window.__melonArmEdit) window.__melonArmEdit(wsState.title, wsPrimaryCode()); } catch (e) {}
     });
+    document.getElementById('wsCopy').addEventListener('click', () => { copyText(wsAllCode()); toast('Code copied'); });
     document.getElementById('wsDownload').addEventListener('click', () => {
       const primary = wsState.files.find(f => f.lang === 'html') || wsState.files[0];
       if (wsState.files.length > 1 || !primary || primary.lang !== 'html'){ dl((wsState.title || 'project').replace(/[^\w.-]+/g, '-').toLowerCase() + '.html', wsState.doc, 'text/html'); }
       else dl(primary.name, primary.code, 'text/html');
-      toast('Project downloaded');
+      toast('Downloaded as HTML');
     });
     document.getElementById('wsSave').addEventListener('click', () => {
       const primary = wsState.files.find(f => f.lang === 'html') || wsState.files[0];
