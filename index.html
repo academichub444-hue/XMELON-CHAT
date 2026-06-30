@@ -208,6 +208,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .cv-star{flex:0 0 auto;color:var(--text-3);padding:4px;background:none;border:0;cursor:pointer}
 .cv-star.on{color:#f5b945}
 .cv-star svg{width:18px;height:18px}
+.ai-body img{max-width:100%;height:auto;border-radius:14px;display:block;margin:4px 0}
+.ai-body video{max-width:100%;border-radius:14px;display:block;margin:4px 0}
 .sb-spacer{flex:1;min-height:14px}
 .upgrade{position:relative;margin-bottom:14px;padding:22px 18px 18px;border-radius:18px;text-align:center;background:var(--surface-2);border:1px solid var(--border);overflow:hidden}
 .uspark{position:absolute;color:var(--primary-2);opacity:.7}
@@ -1321,28 +1323,45 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 #workspace{position:fixed;inset:0;z-index:130;display:none;flex-direction:column;background:var(--app-bg);color:var(--text);padding-top:max(8px,env(safe-area-inset-top))}
 #workspace.active{display:flex;animation:wsIn .42s cubic-bezier(.22,1,.36,1)}
 @keyframes wsIn{from{transform:translateX(100%)}to{transform:none}}
-.ws-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)}
-.ws-back{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;flex-shrink:0}
+body.ws-open{overflow:hidden}
+/* top nav */
+.ws-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border)}
+.ws-back{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;flex-shrink:0;transition:transform .12s}
+.ws-back:active{transform:scale(.92)}
 .ws-back svg{width:19px;height:19px}
 .ws-ttl{flex:1;min-width:0}
 .ws-ttl b{font-family:var(--font-display);font-weight:650;font-size:15px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ws-ttl small{color:var(--text-3);font-size:11.5px;display:flex;align-items:center;gap:6px}
 .ws-dot{width:7px;height:7px;border-radius:50%;background:#E0a73c;box-shadow:0 0 0 3px color-mix(in srgb,#E0a73c 22%,transparent)}
-#workspace.ready .ws-dot{background:#35C28A;box-shadow:0 0 0 3px color-mix(in srgb,#35C28A 22%,transparent)}
-.ws-dev{display:flex;gap:3px;background:var(--nav-active);border-radius:10px;padding:3px}
-.ws-dev button{width:32px;height:28px;border:none;background:transparent;color:var(--text-3);border-radius:8px;cursor:pointer;display:grid;place-items:center}
+#workspace.ready .ws-dot{background:#35C28A;box-shadow:0 0 0 3px color-mix(in srgb,#35C28A 22%,transparent);animation:wsPulse 2.4s ease-in-out infinite}
+@keyframes wsPulse{0%,100%{box-shadow:0 0 0 3px color-mix(in srgb,#35C28A 22%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,#35C28A 9%,transparent)}}
+.ws-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:1px solid transparent;background:var(--grad);color:#fff;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(109,94,248,.32);transition:transform .12s}
+.ws-pill:active{transform:scale(.95)}
+.ws-pill svg{width:15px;height:15px}
+.ws-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text-2);cursor:pointer;flex-shrink:0;transition:.15s}
+.ws-icon:hover{color:var(--text);border-color:color-mix(in srgb,var(--accent-2) 45%,var(--border))}
+.ws-icon:active{transform:scale(.9)}
+.ws-icon svg{width:17px;height:17px}
+.ws-icon.sm{width:30px;height:30px}.ws-icon.sm svg{width:15px;height:15px}
+.ws-icon.spin svg{animation:wsSpin .6s linear}
+@keyframes wsSpin{to{transform:rotate(360deg)}}
+.ws-dev{display:flex;gap:3px;background:var(--nav-active);border-radius:10px;padding:3px;flex-shrink:0}
+.ws-dev button{width:30px;height:28px;border:none;background:transparent;color:var(--text-3);border-radius:8px;cursor:pointer;display:grid;place-items:center;transition:.15s}
 .ws-dev button svg{width:16px;height:16px}
 .ws-dev button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
-.ws-tabs{display:flex;gap:4px;padding:10px 14px 0}
-.ws-tab{flex:1;height:38px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);border-radius:11px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s}
+/* tabs + animated indicator */
+.ws-tabs{position:relative;display:flex;gap:4px;padding:10px 12px 0}
+.ws-tab{position:relative;z-index:1;flex:1;height:38px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);border-radius:11px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:color .2s,border-color .2s,background .2s}
 .ws-tab svg{width:15px;height:15px}
-.ws-tab.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(109,94,248,.28)}
-.ws-body{flex:1;position:relative;overflow:hidden;margin:12px 14px 0}
+.ws-tab.on{color:#fff;border-color:transparent;background:transparent}
+.ws-tab-ind{position:absolute;top:10px;height:38px;width:0;border-radius:11px;background:var(--grad);box-shadow:0 6px 16px rgba(109,94,248,.32);transition:left .32s cubic-bezier(.22,1,.36,1),width .32s cubic-bezier(.22,1,.36,1);z-index:0;pointer-events:none}
+/* body + panes */
+.ws-body{flex:1;position:relative;overflow:hidden;margin:12px 12px 0}
 .ws-pane{position:absolute;inset:0;display:none;flex-direction:column;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface)}
-.ws-pane.on{display:flex}
+.ws-pane.on{display:flex;animation:wsFade .3s ease}
+@keyframes wsFade{from{opacity:0;transform:scale(.992)}to{opacity:1;transform:none}}
 /* build/terminal */
 .ws-term{flex:1;overflow-y:auto;padding:16px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.85;background:#0c0c16;color:#c9d4ee}
-[data-theme=light] .ws-term{background:#0E1020;color:#d5def2}
 .ws-term .tl{display:flex;gap:9px;opacity:0;transform:translateY(3px);animation:tlIn .25s ease forwards}
 @keyframes tlIn{to{opacity:1;transform:none}}
 .ws-term .tl .ic{flex-shrink:0;width:15px;color:#6f7bb0}
@@ -1351,21 +1370,113 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .ws-term .cmd{color:#9aa6d6}
 .ws-term .muted{color:#6f7bb0}
 .ws-prog{height:4px;background:rgba(255,255,255,.08)}
-.ws-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));transition:width .4s ease}
+.ws-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));transition:width .4s ease;box-shadow:0 0 12px rgba(168,141,255,.55)}
 /* code */
-.ws-files{display:flex;gap:6px;padding:10px;border-bottom:1px solid var(--border);overflow-x:auto;background:var(--surface-2,var(--surface))}
+.ws-code-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);background:var(--surface-2,var(--surface))}
+.ws-files{display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .ws-file{flex-shrink:0;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:9px;font-size:12.5px;color:var(--text-2);cursor:pointer;border:1px solid transparent;white-space:nowrap}
 .ws-file svg{width:14px;height:14px;color:var(--text-3)}
 .ws-file.on{background:var(--nav-active);color:var(--text);border-color:var(--border)}
+.ws-code-wrap{flex:1;position:relative;overflow:hidden;display:flex}
 .ws-code{flex:1;overflow:auto;margin:0;padding:16px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre;background:var(--surface);border:0;outline:0;resize:none;width:100%;box-sizing:border-box;-webkit-appearance:none;tab-size:2}
 .ws-edit-hint{position:absolute;right:14px;bottom:12px;font-size:11px;color:var(--text-3);background:var(--surface-2,var(--surface));border:1px solid var(--border);border-radius:8px;padding:4px 9px;pointer-events:none;opacity:.9}
-/* preview */
-.ws-prev-wrap{flex:1;overflow:auto;background:repeating-conic-gradient(var(--nav-active) 0% 25%,transparent 0% 50%) 50%/18px 18px;display:flex;justify-content:center;align-items:flex-start;padding:0}
-.ws-prev-wrap.mobile{padding:18px}
-.ws-frame{width:100%;height:100%;border:none;background:#fff;transition:width .3s ease,max-width .3s ease}
-.ws-prev-wrap.mobile .ws-frame{width:390px;max-width:100%;height:96%;min-height:560px;border-radius:26px;box-shadow:0 20px 50px rgba(0,0,0,.4);border:8px solid #14141f}
-.ws-foot{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
-.ws-foot .act{flex:1;justify-content:center;height:42px;border-radius:12px;font-size:13.5px}
+/* preview stage */
+.ws-stage{flex:1;display:flex;min-height:0;position:relative}
+.ws-browser{flex:1;display:flex;flex-direction:column;min-width:0;padding:12px}
+.ws-bbar{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#16161f;border:1px solid var(--border);border-bottom:none;border-radius:14px 14px 0 0}
+[data-theme=light] .ws-bbar{background:#eef0f6}
+.ws-traffic{display:flex;gap:6px;flex-shrink:0}
+.ws-traffic i{width:11px;height:11px;border-radius:50%}
+.ws-traffic .r{background:#ff5f57}.ws-traffic .y{background:#febc2e}.ws-traffic .g{background:#28c840}
+.ws-bnav{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:transparent;border:none;color:var(--text-3);cursor:pointer;flex-shrink:0;transition:.15s}
+.ws-bnav:hover{background:var(--nav-active);color:var(--text)}
+.ws-bnav svg{width:15px;height:15px}
+.ws-url{flex:1;min-width:0;display:flex;align-items:center;gap:7px;height:28px;padding:0 12px;border-radius:8px;background:var(--app-bg);color:var(--text-2);font-size:12px;overflow:hidden}
+.ws-url svg{width:12px;height:12px;color:#35C28A;flex-shrink:0}
+.ws-url span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-prev-wrap{flex:1;position:relative;overflow:auto;background:#0e0e17;background-image:repeating-conic-gradient(rgba(255,255,255,.025) 0% 25%,transparent 0% 50%);background-size:20px 20px;background-position:50%;display:flex;justify-content:center;align-items:flex-start;border:1px solid var(--border);border-radius:0 0 14px 14px;padding:0;transition:padding .3s ease}
+.ws-frame{width:100%;height:100%;border:none;background:#fff;transition:width .35s cubic-bezier(.22,1,.36,1),max-width .35s,transform .25s ease;transform-origin:top center}
+.ws-prev-wrap.sized{padding:18px}
+.ws-prev-wrap.sized .ws-frame{height:96%;min-height:520px;border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);border:8px solid #14141f}
+[data-theme=light] .ws-prev-wrap.sized .ws-frame{border-color:#d3d7e2}
+/* skeleton */
+.ws-skeleton{position:absolute;inset:0;z-index:3;background:var(--surface);display:flex;flex-direction:column;gap:14px;padding:28px}
+.ws-skeleton[hidden]{display:none}
+.ws-skeleton span{display:block;height:16px;border-radius:8px;background:linear-gradient(90deg,var(--nav-active) 25%,color-mix(in srgb,var(--accent-2) 16%,var(--nav-active)) 37%,var(--nav-active) 63%);background-size:400% 100%;animation:wsShim 1.4s ease infinite}
+.ws-skeleton span:nth-child(1){width:60%}.ws-skeleton span:nth-child(2){width:90%}.ws-skeleton span:nth-child(3){width:74%}
+@keyframes wsShim{to{background-position:-135% 0}}
+/* preview overlays */
+.ws-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .2s}
+.ws-prev-wrap.ov-grid .ws-overlay{opacity:1;background-image:linear-gradient(rgba(168,141,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(168,141,255,.16) 1px,transparent 1px);background-size:24px 24px}
+.ws-prev-wrap.ov-rulers .ws-overlay{opacity:1;background-image:linear-gradient(90deg,rgba(168,141,255,.45) 1px,transparent 1px),linear-gradient(rgba(168,141,255,.45) 1px,transparent 1px);background-size:50px 50px}
+.ws-prev-wrap.ov-safe .ws-overlay{opacity:1;box-shadow:inset 0 0 0 16px rgba(53,194,138,.14),inset 0 0 0 17px rgba(53,194,138,.4)}
+.ws-bp-label{position:absolute;top:8px;left:50%;transform:translateX(-50%);padding:3px 10px;border-radius:999px;background:var(--grad);color:#fff;font-size:11px;font-weight:600;opacity:0;transition:.2s;white-space:nowrap}
+.ws-prev-wrap.ov-bp .ws-bp-label{opacity:1}
+/* inspector sidebar */
+.ws-side-toggle{position:absolute;top:18px;right:14px;z-index:6;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text-2);cursor:pointer;box-shadow:var(--shadow-sm);transition:.15s}
+.ws-side-toggle:active{transform:scale(.9)}
+.ws-side-toggle svg{width:18px;height:18px}
+.ws-side{width:232px;flex-shrink:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;border-left:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;gap:18px}
+.ws-side-sec{display:flex;flex-direction:column;gap:9px}
+.ws-side-h{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
+.ws-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ws-chip{padding:6px 11px;border-radius:9px;border:1px solid var(--border);background:var(--app-bg);color:var(--text-2);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:.15s}
+.ws-chip.on{background:var(--grad);color:#fff;border-color:transparent}
+.ws-zoom{display:flex;align-items:center;gap:8px;background:var(--app-bg);border:1px solid var(--border);border-radius:10px;padding:5px}
+.ws-zoom button{width:30px;height:30px;border-radius:8px;border:none;background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;display:grid;place-items:center}
+.ws-zoom button svg{width:14px;height:14px}
+.ws-zoom span{flex:1;text-align:center;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.ws-seg{display:flex;background:var(--nav-active);border-radius:10px;padding:3px}
+.ws-seg button{flex:1;height:30px;border:none;background:transparent;color:var(--text-3);border-radius:8px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:.15s}
+.ws-seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.ws-perf{display:flex;flex-direction:column;gap:7px;background:var(--app-bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.ws-perf-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-3)}
+.ws-perf-row b{color:var(--text);font-variant-numeric:tabular-nums;font-size:12.5px}
+.ws-bps{display:flex;flex-direction:column;gap:4px}
+.ws-bps button{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--text-2);font-size:12.5px;font-family:inherit;cursor:pointer;text-align:left;transition:.15s}
+.ws-bps button:hover{background:var(--nav-active)}
+.ws-bps button.on{background:var(--nav-active);border-color:var(--border);color:var(--text)}
+.ws-bps button i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ws-tg{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--text-2);cursor:pointer;user-select:none}
+.ws-tg input{display:none}
+.ws-tg i{width:38px;height:22px;border-radius:999px;background:var(--nav-active);border:1px solid var(--border);position:relative;transition:.2s;flex-shrink:0}
+.ws-tg i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--text-3);transition:.2s}
+.ws-tg input:checked+i{background:var(--grad);border-color:transparent}
+.ws-tg input:checked+i::after{transform:translateX(16px);background:#fff}
+.ws-side-scrim{display:none}
+/* console */
+.ws-console{flex-shrink:0;border-top:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;max-height:188px;transition:max-height .28s ease}
+.ws-console.collapsed{max-height:43px}
+.ws-console-head{display:flex;align-items:center;gap:8px;padding:0 10px;height:43px;flex-shrink:0}
+.ws-ctabs{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ws-ctab{flex-shrink:0;padding:6px 10px;border:none;background:transparent;color:var(--text-3);font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer;border-bottom:2px solid transparent;transition:.15s}
+.ws-ctab.on{color:var(--text);border-bottom-color:var(--accent-2)}
+.ws-console-act{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.ws-clink{padding:5px 9px;border:none;background:transparent;color:var(--text-3);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;border-radius:7px;transition:.15s}
+.ws-clink:hover{background:var(--nav-active);color:var(--text)}
+.ws-clink.ic{display:grid;place-items:center;padding:5px}
+.ws-clink.ic svg{transition:transform .25s}
+.ws-console.collapsed .ws-clink.ic svg{transform:rotate(180deg)}
+.ws-console-body{flex:1;overflow-y:auto;padding:6px 12px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.7}
+.ws-console.collapsed .ws-console-body{display:none}
+.ws-cl{display:flex;gap:8px;padding:1px 0;color:var(--text-2)}
+.ws-cl .t{color:var(--text-3);flex-shrink:0;opacity:.7}
+.ws-cl.ok{color:#35C28A}.ws-cl.warn{color:#E0a73c}.ws-cl.err{color:#ff7a7a}.ws-cl.info{color:#7C9DFF}
+.ws-cl-empty{color:var(--text-3);opacity:.6;padding:6px 0}
+/* toolbar */
+.ws-foot{display:flex;gap:8px;padding:12px;padding-bottom:max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ws-foot .act{flex:1 0 auto;min-width:104px;justify-content:center;height:42px;border-radius:12px;font-size:13px;gap:7px;transition:transform .12s ease}
+.ws-foot .act:active{transform:scale(.95)}
+.ws-foot .act.primary{box-shadow:0 6px 18px rgba(109,94,248,.32)}
+/* mobile: inspector slides over */
+@media (max-width:760px){
+  .ws-side{position:absolute;top:0;right:0;bottom:0;width:min(290px,86%);z-index:9;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);box-shadow:-18px 0 50px rgba(0,0,0,.4)}
+  .ws-side.open{transform:none}
+  .ws-side-scrim{display:block;position:absolute;inset:0;z-index:8;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:.25s}
+  .ws-side-scrim.open{opacity:1;visibility:visible}
+  .ws-browser{padding:10px}
+}
+@media (min-width:761px){ .ws-side-toggle{display:none} }
 
 /* ============ ASSET MANAGER ============ */
 #assets{position:absolute;inset:0;z-index:125;display:none;flex-direction:column;background:var(--app-bg);color:var(--text);overflow-y:auto;padding-top:max(20px,env(safe-area-inset-top))}
@@ -3185,35 +3296,129 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="ws-head">
     <button class="ws-back" id="wsBack" aria-label="Back to chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
     <div class="ws-ttl"><b id="wsTitle">Preview</b><small><span class="ws-dot"></span><span id="wsStatus">Building…</span></small></div>
-    <button id="wsEdit" aria-label="Edit in chat" style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;margin-right:8px;border-radius:10px;border:1px solid rgba(168,141,255,.4);background:linear-gradient(135deg,#6D5EF8,#A88DFF);color:#fff;font-size:13px;font-weight:600;cursor:pointer"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit</button>
+    <button id="wsEdit" class="ws-pill" aria-label="Edit in chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span>Edit</span></button>
     <div class="ws-dev" id="wsDev">
       <button data-dev="desktop" class="on" aria-label="Desktop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 20h8M12 17v3"/></svg></button>
+      <button data-dev="tablet" aria-label="Tablet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M11 18h2"/></svg></button>
       <button data-dev="mobile" aria-label="Mobile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg></button>
     </div>
+    <button class="ws-icon" id="wsRefresh" aria-label="Refresh preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+    <button class="ws-icon" id="wsFullscreen" aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+    <button class="ws-icon" id="wsExport" aria-label="Export"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M4 21h16"/></svg></button>
   </div>
   <div class="ws-tabs">
-    <button class="ws-tab" data-wt="build"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg>Build</button>
-    <button class="ws-tab" data-wt="code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>Code</button>
-    <button class="ws-tab on" data-wt="preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>Preview</button>
+    <button class="ws-tab" data-wt="build"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg><span>Build</span></button>
+    <button class="ws-tab" data-wt="code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg><span>Code</span></button>
+    <button class="ws-tab on" data-wt="preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg><span>Preview</span></button>
+    <span class="ws-tab-ind" id="wsTabInd"></span>
   </div>
   <div class="ws-body">
     <div class="ws-pane" data-wp="build">
       <div class="ws-term" id="wsTerm"></div>
       <div class="ws-prog"><i id="wsProg"></i></div>
     </div>
-    <div class="ws-pane" data-wp="code" style="position:relative">
-      <div class="ws-files" id="wsFiles"></div>
-      <textarea id="wsCode" class="ws-code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="Your code appears here — edit it and the preview updates live."></textarea>
-      <span class="ws-edit-hint">Editable · live preview</span>
+    <div class="ws-pane" data-wp="code">
+      <div class="ws-code-head">
+        <div class="ws-files" id="wsFiles"></div>
+        <button class="ws-icon sm" id="wsCopy" aria-label="Copy code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      </div>
+      <div class="ws-code-wrap">
+        <textarea id="wsCode" class="ws-code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="Your code appears here — edit it and the preview updates live."></textarea>
+        <span class="ws-edit-hint">Editable · live preview</span>
+      </div>
     </div>
     <div class="ws-pane on" data-wp="preview">
-      <div class="ws-prev-wrap" id="wsPrevWrap"><iframe class="ws-frame" id="wsFrame" sandbox="allow-scripts allow-forms allow-popups allow-modals" title="Live preview"></iframe></div>
+      <div class="ws-stage">
+        <div class="ws-browser">
+          <div class="ws-bbar">
+            <span class="ws-traffic"><i class="r"></i><i class="y"></i><i class="g"></i></span>
+            <button class="ws-bnav" id="wsBnavBack" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="ws-bnav" id="wsBnavFwd" aria-label="Forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            <button class="ws-bnav" id="wsReload" aria-label="Reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+            <div class="ws-url" id="wsUrl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span id="wsUrlText">melon-studio.app</span></div>
+            <button class="ws-bnav" id="wsOpenNew2" aria-label="Open in new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></button>
+          </div>
+          <div class="ws-prev-wrap" id="wsPrevWrap">
+            <div class="ws-overlay" id="wsOverlay"><span class="ws-bp-label" id="wsBpLabel"></span></div>
+            <div class="ws-skeleton" id="wsSkeleton" hidden><span></span><span></span><span></span></div>
+            <iframe class="ws-frame" id="wsFrame" sandbox="allow-scripts allow-forms allow-popups allow-modals" title="Live preview"></iframe>
+          </div>
+        </div>
+        <button class="ws-side-toggle" id="wsSideToggle" aria-label="Toggle inspector"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="8" x2="20" y2="8"/><circle cx="9" cy="8" r="2" fill="currentColor"/><line x1="4" y1="16" x2="20" y2="16"/><circle cx="15" cy="16" r="2" fill="currentColor"/></svg></button>
+        <aside class="ws-side" id="wsSide">
+          <div class="ws-side-sec">
+            <div class="ws-side-h">Screen size</div>
+            <div class="ws-chips" id="wsSizes">
+              <button class="ws-chip" data-w="320">320</button>
+              <button class="ws-chip" data-w="375">375</button>
+              <button class="ws-chip" data-w="768">768</button>
+              <button class="ws-chip" data-w="1024">1024</button>
+              <button class="ws-chip" data-w="1440">1440</button>
+              <button class="ws-chip on" data-w="0">Full</button>
+            </div>
+          </div>
+          <div class="ws-side-sec">
+            <div class="ws-side-h">Zoom</div>
+            <div class="ws-zoom"><button id="wsZoomOut" aria-label="Zoom out">−</button><span id="wsZoomVal">100%</span><button id="wsZoomIn" aria-label="Zoom in">+</button><button id="wsZoomReset" aria-label="Reset zoom"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button></div>
+          </div>
+          <div class="ws-side-sec">
+            <div class="ws-side-h">Theme</div>
+            <div class="ws-seg" id="wsThemeSeg"><button data-th="light">Light</button><button data-th="dark">Dark</button><button data-th="auto">Auto</button></div>
+          </div>
+          <div class="ws-side-sec">
+            <div class="ws-side-h">Performance</div>
+            <div class="ws-perf">
+              <div class="ws-perf-row"><span>FPS</span><b id="wsFps">—</b></div>
+              <div class="ws-perf-row"><span>Memory</span><b id="wsMem">—</b></div>
+              <div class="ws-perf-row"><span>Load</span><b id="wsLoad">—</b></div>
+            </div>
+          </div>
+          <div class="ws-side-sec">
+            <div class="ws-side-h">Breakpoints</div>
+            <div class="ws-bps" id="wsBps">
+              <button data-w="320"><i style="background:#A88DFF"></i>320px</button>
+              <button data-w="375"><i style="background:#6D5EF8"></i>375px</button>
+              <button data-w="768"><i style="background:#4d7cff"></i>768px</button>
+              <button data-w="1024"><i style="background:#35C28A"></i>1024px</button>
+              <button data-w="1440"><i style="background:#E0a73c"></i>1440px</button>
+            </div>
+          </div>
+          <div class="ws-side-sec">
+            <div class="ws-side-h">View options</div>
+            <label class="ws-tg"><span>Show grid</span><input type="checkbox" id="wsTgGrid"><i></i></label>
+            <label class="ws-tg"><span>Show rulers</span><input type="checkbox" id="wsTgRulers"><i></i></label>
+            <label class="ws-tg"><span>Show safe area</span><input type="checkbox" id="wsTgSafe"><i></i></label>
+            <label class="ws-tg"><span>Show breakpoints</span><input type="checkbox" id="wsTgBp"><i></i></label>
+          </div>
+        </aside>
+        <div class="ws-side-scrim" id="wsSideScrim"></div>
+      </div>
     </div>
   </div>
+  <div class="ws-console" id="wsConsole">
+    <div class="ws-console-head">
+      <div class="ws-ctabs" id="wsCtabs">
+        <button class="ws-ctab on" data-ct="console">Console</button>
+        <button class="ws-ctab" data-ct="warnings">Warnings</button>
+        <button class="ws-ctab" data-ct="performance">Performance</button>
+        <button class="ws-ctab" data-ct="network">Network</button>
+        <button class="ws-ctab" data-ct="a11y">Accessibility</button>
+      </div>
+      <div class="ws-console-act">
+        <button class="ws-clink" id="wsConCopy">Copy</button>
+        <button class="ws-clink" id="wsConClear">Clear</button>
+        <button class="ws-clink ic" id="wsConToggle" aria-label="Toggle console"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="ws-console-body" id="wsConBody"></div>
+  </div>
   <div class="ws-foot">
-    <button class="act" id="wsCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>
-    <button class="act" id="wsDownload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 19h16"/></svg>Download</button>
-    <button class="act primary" id="wsSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Save</button>
+    <button class="act" id="wsCopyLink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Copy Link</span></button>
+    <button class="act" id="wsOpenNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg><span>Open</span></button>
+    <button class="act" id="wsDownload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 19h16"/></svg><span>Download</span></button>
+    <button class="act" id="wsShareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg><span>Share</span></button>
+    <button class="act" id="wsSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg><span>Save</span></button>
+    <button class="act primary" id="wsDeploy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5 3 21l4.5-1.5M14 4s4 0 6 2 2 6 2 6l-7 7s-3-1-5-3-3-5-3-5z"/><circle cx="14" cy="10" r="1.5"/></svg><span>Deploy</span></button>
   </div>
 </div>
 
@@ -3632,8 +3837,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   // Per-model behaviour so the model switcher actually changes the answers.
   const MODEL_MAP = {
     'methel':  { backend: 'claude-haiku-4-5',  maxTokens: 1024, persona: 'You are Methel — fast and concise. Keep replies tight and quick.' },
-    'core-45': { backend: 'claude-sonnet-4-6', maxTokens: 4096, persona: 'You are Core-45 — a coding and debugging specialist. Prefer correct, complete, well-formatted code. When asked to build a page or app, output a single complete, self-contained file.' },
-    'forge':   { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Forge — a coding and development specialist. Always return COMPLETE, runnable code in a single fenced block. For websites, output one full self-contained index.html including <!doctype html>, <head> with all <style>, and a complete <body> — never truncate or abbreviate.' },
+    'core-45': { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Core-45 — a coding and debugging specialist. Prefer correct, complete, well-formatted code. When asked to build a page or app, output ONE complete, self-contained file (full <!doctype html> through </html>). Write efficient, compact code so the whole file fits in your output budget — never stop mid-file or leave tags unclosed.' },
+    'forge':   { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Forge — a senior build specialist. Return ONE COMPLETE, runnable file in a single fenced code block. For websites, output a full self-contained index.html: <!doctype html>, <head> with all <style>, and a complete <body>, ending with </html>. Write efficient, compact code so the entire file fits — never truncate, abbreviate, or stop mid-file.' },
     'orion':   { backend: 'claude-opus-4-8',   maxTokens: 2048, persona: 'You are Orion — advanced reasoning and research. Think carefully and structure thorough, well-organised answers.' }
   };
   const SYS_BASE = "You are Melon Studio, a helpful AI assistant. Reply in clean GitHub-flavoured markdown — use headings, **bold**, lists, tables, and fenced code blocks where they help.";
@@ -4379,9 +4584,23 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       if (!generating) { if (ref.el) ref.el.remove(); return; }
       if (!r.ok || d.error) return orionError(ref, d.error || ('HTTP ' + r.status));
       if (ref.stages && ref.stages.parentNode) ref.stages.remove();
-      if (type === 'video') ref.body.innerHTML = '<video controls playsinline style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '"></video>' + dlRow(d.url, 'video.mp4');
-      else ref.body.innerHTML = '<img alt="' + esc(prompt) + '" style="max-width:100%;border-radius:14px;display:block" src="' + d.url + '">' + dlRow(d.url, 'image.png');
-      convAddMsg('assistant', '[' + (type === 'video' ? 'Generated video' : 'Generated image') + '](' + d.url + ')');
+      const mUrl = d.url || d.sourceUrl || '';
+      if (!mUrl) return orionError(ref, 'No media was returned. Please try again.');
+      ref.body.innerHTML = '';
+      let mediaEl;
+      if (type === 'video'){
+        mediaEl = document.createElement('video');
+        mediaEl.controls = true; mediaEl.setAttribute('playsinline', ''); mediaEl.src = mUrl;
+        mediaEl.style.cssText = 'max-width:100%;border-radius:14px;display:block;background:#000';
+      } else {
+        mediaEl = document.createElement('img');
+        mediaEl.alt = prompt; mediaEl.src = mUrl;
+        mediaEl.style.cssText = 'max-width:100%;border-radius:14px;display:block';
+      }
+      mediaEl.addEventListener('error', function(){ if (d.sourceUrl && mediaEl.src !== d.sourceUrl){ mediaEl.src = d.sourceUrl; } });
+      ref.body.appendChild(mediaEl);
+      ref.body.insertAdjacentHTML('beforeend', dlRow(mUrl, type === 'video' ? 'video.mp4' : 'image.png'));
+      convAddMsg('assistant', type === 'video' ? ('[Generated video](' + mUrl + ')') : ('![Generated image](' + mUrl + ')'));
       orionDone(ref);
     } catch(e){ orionError(ref, 'Generation failed. ' + (e && e.message ? e.message : e)); }
   }
@@ -5666,6 +5885,13 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     function setWsTab(name){
       workspace.querySelectorAll('.ws-tab').forEach(t => t.classList.toggle('on', t.dataset.wt === name));
       workspace.querySelectorAll('.ws-pane').forEach(p => p.classList.toggle('on', p.dataset.wp === name));
+      moveTabInd();
+    }
+    function moveTabInd(){
+      const ind = document.getElementById('wsTabInd'); if (!ind) return;
+      const act = workspace.querySelector('.ws-tab.on'); if (!act) return;
+      ind.style.left = act.offsetLeft + 'px';
+      ind.style.width = act.offsetWidth + 'px';
     }
     function showCodeFile(i){
       wsCurIdx = i;
@@ -5685,6 +5911,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       wsTerm.innerHTML = ''; wsProg.style.width = '0';
       workspace.classList.remove('ready');
       document.getElementById('wsStatus').textContent = 'Building…';
+      wsConClear(); wsBuildStart = Date.now();
       const steps = [];
       steps.push(['run', '$ melon build ' + (wsState.title || 'project').toLowerCase().replace(/\s+/g, '-')]);
       steps.push(['muted', 'Analysing request and planning architecture…']);
@@ -5704,6 +5931,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
           const mark = s[0] === 'ok' ? '✓' : s[0] === 'run' ? '›' : '•';
           line.innerHTML = '<span class="ic">' + mark + '</span><span>' + s[1] + '</span>';
           wsTerm.appendChild(line); wsTerm.scrollTop = wsTerm.scrollHeight;
+          wsLog(s[0] === 'ok' ? 'ok' : s[0] === 'run' ? 'info' : 'log', s[1].replace(/<[^>]+>/g, ''));
           wsProg.style.width = Math.round(((i + 1) / steps.length) * 100) + '%';
           if (i === steps.length - 1){
             workspace.classList.add('ready');
@@ -5725,10 +5953,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         el.addEventListener('click', () => showCodeFile(i)); wsFilesEl.appendChild(el);
       });
       showCodeFile(0);
+      wsShowSkeleton();
       try { wsFrame.srcdoc = wsState.doc; } catch (e) { wsFrame.setAttribute('srcdoc', wsState.doc); }
       setWsTab('build');
       workspace.classList.add('active');
       document.body.classList.add('ws-open');
+      try { if (window.__melonWsStartPerf) window.__melonWsStartPerf(); } catch (e) {}
       try { if (window.__melonRegisterProject) window.__melonRegisterProject({ title: wsState.title, files: wsState.files, doc: wsState.doc }); } catch (e) {}
       runBuild(files);
     }
@@ -5749,8 +5979,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     document.getElementById('wsBack').addEventListener('click', closeWorkspace);
     document.getElementById('wsDev').addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
-      document.querySelectorAll('#wsDev button').forEach(x => x.classList.toggle('on', x === b));
-      wsPrevWrap.classList.toggle('mobile', b.dataset.dev === 'mobile');
+      const map = { desktop: 0, tablet: 768, mobile: 390 };
+      wsSetWidth(map[b.dataset.dev] || 0);
     });
     workspace.querySelectorAll('.ws-tab').forEach(t => t.addEventListener('click', () => setWsTab(t.dataset.wt)));
     document.getElementById('wsEdit').addEventListener('click', () => {
@@ -5770,6 +6000,139 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       toast('Saved to Assets');
     });
 
+    // ---------- pro IDE preview controls ----------
+    let wsBuildStart = 0, wsZoom = 1, wsCurW = 0, wsConTab = 'console', wsLoadMs = 0;
+    const wsLogs = [];
+    const wsConBody = () => document.getElementById('wsConBody');
+    function fmtT(d){ return d.toTimeString().slice(0,8); }
+    function wsLog(type, msg, cat){ wsLogs.push({ cat: cat || 'console', type: type, msg: msg, t: new Date() }); if (wsConTab === (cat || 'console') || ((cat || 'console') === 'console' && wsConTab === 'console')) wsRenderCon(); }
+    function wsConClear(){ for (let i = wsLogs.length - 1; i >= 0; i--) if (wsLogs[i].cat === wsConTab || wsConTab === 'console') {} wsLogs.length = 0; wsRenderCon(); }
+    function wsRenderCon(){
+      const body = wsConBody(); if (!body) return;
+      if (wsConTab === 'performance'){
+        const fps = document.getElementById('wsFps').textContent, mem = document.getElementById('wsMem').textContent, load = document.getElementById('wsLoad').textContent;
+        body.innerHTML = '<div class="ws-cl info"><span>Frame rate</span><span>' + fps + ' fps</span></div><div class="ws-cl info"><span>JS heap</span><span>' + mem + '</span></div><div class="ws-cl info"><span>Preview load</span><span>' + load + '</span></div>';
+        return;
+      }
+      const rows = wsLogs.filter(l => l.cat === wsConTab);
+      if (!rows.length){ body.innerHTML = '<div class="ws-cl-empty">No ' + wsConTab + ' output yet.</div>'; return; }
+      body.innerHTML = rows.map(l => '<div class="ws-cl ' + l.type + '"><span class="t">' + fmtT(l.t) + '</span><span>' + esc(l.msg) + '</span></div>').join('');
+      body.scrollTop = body.scrollHeight;
+    }
+    function wsShowSkeleton(){ const s = document.getElementById('wsSkeleton'); if (s) s.hidden = false; }
+    function wsHideSkeleton(){ const s = document.getElementById('wsSkeleton'); if (s) s.hidden = true; }
+    function wsSetWidth(w){
+      wsCurW = w;
+      if (w){ wsPrevWrap.classList.add('sized'); wsFrame.style.width = w + 'px'; wsFrame.style.maxWidth = '100%'; }
+      else { wsPrevWrap.classList.remove('sized'); wsFrame.style.width = '100%'; wsFrame.style.maxWidth = 'none'; }
+      const bp = document.getElementById('wsBpLabel'); if (bp) bp.textContent = w ? (w + 'px') : 'Full width';
+      const dev = w === 0 ? 'desktop' : (w <= 480 ? 'mobile' : 'tablet');
+      document.querySelectorAll('#wsDev button').forEach(b => b.classList.toggle('on', b.dataset.dev === dev));
+      document.querySelectorAll('#wsSizes .ws-chip').forEach(c => c.classList.toggle('on', (+c.dataset.w) === w));
+      document.querySelectorAll('#wsBps button').forEach(b => b.classList.toggle('on', (+b.dataset.w) === w));
+    }
+    function wsApplyZoom(){ wsFrame.style.transform = wsZoom === 1 ? 'none' : 'scale(' + wsZoom + ')'; document.getElementById('wsZoomVal').textContent = Math.round(wsZoom * 100) + '%'; }
+    function wsReloadPreview(){ wsShowSkeleton(); wsBuildStart = Date.now(); try { wsFrame.srcdoc = wsState.doc; } catch (e) { wsFrame.setAttribute('srcdoc', wsState.doc); } wsLog('info', 'Reloading preview…'); }
+    function wsBlobUrl(){ try { return URL.createObjectURL(new Blob([wsState.doc || ''], { type: 'text/html' })); } catch (e) { return ''; } }
+    function wsRunA11y(){
+      const doc = wsState.doc || '';
+      for (let i = wsLogs.length - 1; i >= 0; i--) if (wsLogs[i].cat === 'a11y' || wsLogs[i].cat === 'warnings') wsLogs.splice(i, 1);
+      const checks = [
+        [/<title[\s>]/i.test(doc), 'Document has a <title>'],
+        [/<html[^>]*\blang=/i.test(doc), '<html> declares a lang'],
+        [/name=["']viewport["']/i.test(doc), 'Responsive viewport meta present'],
+        [!/<img(?![^>]*\balt=)/i.test(doc), 'All images have alt text']
+      ];
+      checks.forEach(c => wsLogs.push({ cat: 'a11y', type: c[0] ? 'ok' : 'warn', msg: (c[0] ? '✓ ' : '⚠ ') + c[1], t: new Date() }));
+      const fails = checks.filter(c => !c[0]).length;
+      wsLogs.push({ cat: 'warnings', type: 'warn', msg: 'Melon AI can make mistakes — review the code before deploying.', t: new Date() });
+      if (fails) wsLogs.push({ cat: 'warnings', type: 'warn', msg: fails + ' accessibility issue' + (fails > 1 ? 's' : '') + ' found — see the Accessibility tab.', t: new Date() });
+      if (wsConTab === 'a11y' || wsConTab === 'warnings') wsRenderCon();
+    }
+    // perf meter (real FPS via rAF; JS heap where available)
+    let wsFrameCount = 0, wsLastFpsT = (window.performance && performance.now) ? performance.now() : Date.now(), wsRafOn = false;
+    const wsHeadless = typeof navigator !== 'undefined' && /jsdom|node\.js/i.test(navigator.userAgent || '');
+    function wsPerfLoop(now){
+      now = now || ((window.performance && performance.now) ? performance.now() : Date.now());
+      wsFrameCount++;
+      if (now - wsLastFpsT >= 1000){
+        document.getElementById('wsFps').textContent = Math.round(wsFrameCount * 1000 / (now - wsLastFpsT));
+        const m = (window.performance && performance.memory && performance.memory.usedJSHeapSize) ? (Math.round(performance.memory.usedJSHeapSize / 1048576) + ' MB') : 'n/a';
+        document.getElementById('wsMem').textContent = m;
+        if (wsConTab === 'performance') wsRenderCon();
+        wsFrameCount = 0; wsLastFpsT = now;
+      }
+      if (workspace.classList.contains('active')) requestAnimationFrame(wsPerfLoop); else wsRafOn = false;
+    }
+    function wsStartPerf(){ if (wsRafOn || wsHeadless || typeof requestAnimationFrame !== 'function') return; wsRafOn = true; wsLastFpsT = (window.performance && performance.now) ? performance.now() : Date.now(); wsFrameCount = 0; requestAnimationFrame(wsPerfLoop); }
+    window.__melonWsStartPerf = wsStartPerf;
+
+    // iframe load → hide skeleton, record load time, log network + a11y
+    wsFrame.addEventListener('load', () => {
+      wsHideSkeleton();
+      if (wsBuildStart){ wsLoadMs = Date.now() - wsBuildStart; document.getElementById('wsLoad').textContent = wsLoadMs + ' ms'; }
+      wsLog('ok', 'Preview loaded' + (wsLoadMs ? (' in ' + wsLoadMs + ' ms') : ''));
+      wsLogs.push({ cat: 'network', type: 'info', msg: 'GET srcdoc · 200 OK' + (wsLoadMs ? (' · ' + wsLoadMs + 'ms') : ''), t: new Date() });
+      wsRunA11y();
+      if (wsConTab === 'network') wsRenderCon();
+    });
+
+    // top-nav + browser chrome
+    function spin(btn){ if (!btn) return; btn.classList.add('spin'); setTimeout(() => btn.classList.remove('spin'), 600); }
+    document.getElementById('wsRefresh').addEventListener('click', e => { spin(e.currentTarget); wsReloadPreview(); });
+    document.getElementById('wsReload').addEventListener('click', () => wsReloadPreview());
+    const bnB = document.getElementById('wsBnavBack'), bnF = document.getElementById('wsBnavFwd');
+    if (bnB) bnB.addEventListener('click', () => wsReloadPreview());
+    if (bnF) bnF.addEventListener('click', () => wsReloadPreview());
+    document.getElementById('wsFullscreen').addEventListener('click', () => { const el = document.getElementById('wsPrevWrap'); try { (el.requestFullscreen || el.webkitRequestFullscreen || function(){}).call(el); } catch (e) { toast('Fullscreen not supported here'); } });
+    document.getElementById('wsExport').addEventListener('click', () => { document.getElementById('wsDownload').click(); });
+    function wsShare(){
+      const data = { title: wsState.title || 'Melon project', text: 'Built with Melon Studio', url: location.href };
+      if (navigator.share){ navigator.share(data).catch(() => {}); }
+      else { copyText(location.href); toast('Link copied to clipboard'); }
+    }
+    document.getElementById('wsShareBtn').addEventListener('click', wsShare);
+    document.getElementById('wsCopyLink').addEventListener('click', () => { copyText(location.href); toast('Link copied'); });
+    function wsOpenInNew(){ const u = wsBlobUrl(); if (u){ window.open(u, '_blank'); setTimeout(() => URL.revokeObjectURL(u), 30000); } }
+    document.getElementById('wsOpenNew').addEventListener('click', wsOpenInNew);
+    const on2 = document.getElementById('wsOpenNew2'); if (on2) on2.addEventListener('click', wsOpenInNew);
+    document.getElementById('wsDeploy').addEventListener('click', () => { toast('Download the file, then push to Vercel to deploy'); wsLog('info', 'Deploy: export the project and connect it to Vercel.'); document.getElementById('wsDownload').click(); });
+
+    // inspector sidebar
+    const wsSide = document.getElementById('wsSide'), wsScrim = document.getElementById('wsSideScrim');
+    function wsSideOpen(v){ wsSide.classList.toggle('open', v); if (wsScrim) wsScrim.classList.toggle('open', v); }
+    document.getElementById('wsSideToggle').addEventListener('click', () => wsSideOpen(!wsSide.classList.contains('open')));
+    if (wsScrim) wsScrim.addEventListener('click', () => wsSideOpen(false));
+    document.getElementById('wsSizes').addEventListener('click', e => { const b = e.target.closest('.ws-chip'); if (b) wsSetWidth(+b.dataset.w); });
+    document.getElementById('wsBps').addEventListener('click', e => { const b = e.target.closest('button'); if (b) wsSetWidth(+b.dataset.w); });
+    document.getElementById('wsZoomIn').addEventListener('click', () => { wsZoom = Math.min(1.5, +(wsZoom + 0.1).toFixed(2)); wsApplyZoom(); });
+    document.getElementById('wsZoomOut').addEventListener('click', () => { wsZoom = Math.max(0.4, +(wsZoom - 0.1).toFixed(2)); wsApplyZoom(); });
+    document.getElementById('wsZoomReset').addEventListener('click', () => { wsZoom = 1; wsApplyZoom(); });
+    document.getElementById('wsThemeSeg').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      document.querySelectorAll('#wsThemeSeg button').forEach(x => x.classList.toggle('on', x === b));
+      const th = b.dataset.th;
+      if (th === 'light') document.documentElement.dataset.theme = 'light';
+      else if (th === 'dark') document.documentElement.dataset.theme = 'dark';
+      else { delete document.documentElement.dataset.theme; }
+    });
+    [['wsTgGrid', 'ov-grid'], ['wsTgRulers', 'ov-rulers'], ['wsTgSafe', 'ov-safe'], ['wsTgBp', 'ov-bp']].forEach(([id, cls]) => {
+      const el = document.getElementById(id); if (el) el.addEventListener('change', () => wsPrevWrap.classList.toggle(cls, el.checked));
+    });
+
+    // console
+    document.getElementById('wsCtabs').addEventListener('click', e => {
+      const b = e.target.closest('.ws-ctab'); if (!b) return;
+      wsConTab = b.dataset.ct;
+      document.querySelectorAll('#wsCtabs .ws-ctab').forEach(x => x.classList.toggle('on', x === b));
+      wsRenderCon();
+    });
+    document.getElementById('wsConClear').addEventListener('click', () => { for (let i = wsLogs.length - 1; i >= 0; i--) if (wsLogs[i].cat === wsConTab) wsLogs.splice(i, 1); wsRenderCon(); });
+    document.getElementById('wsConCopy').addEventListener('click', () => { copyText(wsLogs.filter(l => l.cat === wsConTab).map(l => fmtT(l.t) + '  ' + l.msg).join('\n')); toast('Logs copied'); });
+    document.getElementById('wsConToggle').addEventListener('click', () => document.getElementById('wsConsole').classList.toggle('collapsed'));
+
+    window.addEventListener('resize', moveTabInd);
+    setTimeout(moveTabInd, 60);
     // ---------- asset manager ----------
     const ASSET_KEY = 'melon_assets';
     let assets = [];
