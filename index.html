@@ -1371,6 +1371,8 @@ body.ws-open{overflow:hidden}
 .ws-term .muted{color:#6f7bb0}
 .ws-prog{height:4px;background:rgba(255,255,255,.08)}
 .ws-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));transition:width .4s ease;box-shadow:0 0 12px rgba(168,141,255,.55)}
+.ws-prog.indet i{width:38%;transition:none;animation:wsIndet 1.15s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes wsIndet{0%{margin-left:-40%}100%{margin-left:102%}}
 /* code */
 .ws-code-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);background:var(--surface-2,var(--surface))}
 .ws-files{display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -1477,6 +1479,21 @@ body.ws-open{overflow:hidden}
   .ws-browser{padding:10px}
 }
 @media (min-width:761px){ .ws-side-toggle{display:none} }
+/* Preview tab: hide console + toolbar so the output gets the full space */
+#workspace.ws-tab-preview .ws-console,
+#workspace.ws-tab-preview .ws-foot{display:none}
+/* True fullscreen preview (CSS-based so it works on iOS too) */
+#workspace.ws-fs .ws-head,
+#workspace.ws-fs .ws-tabs,
+#workspace.ws-fs .ws-console,
+#workspace.ws-fs .ws-foot{display:none}
+#workspace.ws-fs .ws-body{margin:0}
+#workspace.ws-fs .ws-pane[data-wp=preview]{border:0;border-radius:0}
+#workspace.ws-fs .ws-browser{padding:0}
+#workspace.ws-fs .ws-bbar{border-radius:0}
+.ws-fs-exit{display:none;position:fixed;top:calc(env(safe-area-inset-top) + 10px);right:12px;z-index:200;width:42px;height:42px;border-radius:50%;background:rgba(18,18,28,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);color:#fff;align-items:center;justify-content:center;cursor:pointer}
+.ws-fs-exit svg{width:20px;height:20px}
+#workspace.ws-fs .ws-fs-exit{display:flex}
 
 /* ============ ASSET MANAGER ============ */
 #assets{position:absolute;inset:0;z-index:125;display:none;flex-direction:column;background:var(--app-bg);color:var(--text);overflow-y:auto;padding-top:max(20px,env(safe-area-inset-top))}
@@ -2612,7 +2629,7 @@ body.ws-open{overflow:hidden}
       <div class="ct-grid g4">
         <div class="ct-card" data-name="github"><button class="ct-dots" aria-label="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
           <div class="ct-logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#181717"/><path fill="#fff" d="M12 5.3a6.7 6.7 0 0 0-2.12 13.05c.34.06.46-.15.46-.33l-.01-1.16c-1.87.4-2.26-.9-2.26-.9-.3-.78-.75-.98-.75-.98-.61-.42.05-.41.05-.41.67.05 1.03.7 1.03.7.6 1.03 1.57.73 1.96.56.06-.44.23-.73.42-.9-1.49-.17-3.05-.74-3.05-3.32 0-.73.26-1.33.69-1.8-.07-.17-.3-.85.07-1.78 0 0 .56-.18 1.84.69a6.4 6.4 0 0 1 3.35 0c1.28-.87 1.84-.69 1.84-.69.37.93.14 1.61.07 1.78.43.47.69 1.07.69 1.8 0 2.58-1.57 3.15-3.06 3.31.24.21.46.62.46 1.25l-.01 1.85c0 .18.12.39.47.33A6.7 6.7 0 0 0 12 5.3z"/></svg></div>
-          <div class="ct-name">GitHub</div><div class="ct-desc">Connect repos &amp; push code</div><button class="ct-btn">Connect</button></div>
+          <div class="ct-name">GitHub</div><div class="ct-desc">Sign in with GitHub (read-only)</div><button class="ct-btn">Connect</button></div>
         <div class="ct-card" data-name="vercel"><button class="ct-dots" aria-label="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
           <div class="ct-logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#000"/><path fill="#fff" d="M12 6.3 17.6 16H6.4z"/></svg></div>
           <div class="ct-name">Vercel</div><div class="ct-desc">Deploy websites instantly</div><button class="ct-btn">Connect</button></div>
@@ -3843,7 +3860,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   };
   const SYS_BASE = "You are Melon Studio, a helpful AI assistant. Reply in clean GitHub-flavoured markdown — use headings, **bold**, lists, tables, and fenced code blocks where they help.";
   function activeBackendModel(){ return MODEL_MAP[activeModel] || MODEL_MAP['core-45']; }
-  function systemPrompt(){ return SYS_BASE + '\n' + activeBackendModel().persona; }
+  const DESIGN_DIRECTIVE = "DESIGN MANDATE — build premium, production-grade UI. Use a cohesive design system: a modern colour palette with hex tokens, a Google Fonts type pairing, an 8pt spacing scale, generous rounded corners, soft layered shadows, and tasteful glassmorphism. Add smooth 60fps micro-interactions and transitions (hover, press, focus, entrance) that respect prefers-reduced-motion. Make it fully responsive and mobile-first. Use REAL vector icons via inline SVG or a CDN icon set (Lucide, Heroicons or Font Awesome) — NEVER use emoji as interface icons. Load fonts from Google Fonts and icons from a CDN so assets are real and high quality. Match the polish of Linear, Vercel, Cursor and Stripe.";
+  function systemPrompt(){
+    var base = SYS_BASE + '\n' + activeBackendModel().persona;
+    if (enhanceOn && (activeModel === 'core-45' || activeModel === 'forge')) base += '\n' + DESIGN_DIRECTIVE;
+    return base;
+  }
 
   let abortCtrl = null;
   let generating = false;
@@ -4054,6 +4076,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     ref.onDone = () => {
       if (window.__melonAddActions) window.__melonAddActions(ref.el, reply, prompt || '');
       if (isCode && window.__melonMaybeWorkspace) window.__melonMaybeWorkspace(reply, prompt || '');
+      else if (window.__melonCancelPrep) window.__melonCancelPrep();
     };
     runStages(ref, isCode ? CODE_STAGES : STAGES, () => streamDoc(ref, reply));
   }
@@ -4072,15 +4095,22 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const ref = addAiDoc();
     if (maybeEditFlow(ref, text)) return;
     if (maybeOrionGenerate(ref, text)) return;
+    if (window.__melonIsVibeModel && window.__melonIsVibeModel()){
+      if (window.__melonPrepWorkspace) window.__melonPrepWorkspace(text);
+      if (enhanceOn){ enhancePrompt(text).then(function(en){ getAssistantReply(text, en).then(reply => handleReply(ref, reply, text)); }); return; }
+    }
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
 
   // ── Real assistant. Talks to your backend (API_URL); falls back to a local
   //    assistant when no backend is set so the file always runs standalone. ──
-  async function getAssistantReply(userText){
+  async function getAssistantReply(userText, enhancedLast){
     const mdl = activeBackendModel();
     const history = (current ? current.messages : [{ role: 'user', content: userText }])
       .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content) }));
+    if (enhancedLast && enhancedLast.trim()){
+      for (let i = history.length - 1; i >= 0; i--){ if (history[i].role === 'user'){ history[i] = { role: 'user', content: enhancedLast }; break; } }
+    }
 
     if (!API_URL) return localReply(userText);
 
@@ -4210,6 +4240,10 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const ref = addAiDoc();
     if (maybeEditFlow(ref, text)) return;
     if (maybeOrionGenerate(ref, text)) return;
+    if (window.__melonIsVibeModel && window.__melonIsVibeModel()){
+      if (window.__melonPrepWorkspace) window.__melonPrepWorkspace(text);
+      if (enhanceOn){ enhancePrompt(text).then(function(en){ getAssistantReply(text, en).then(reply => handleReply(ref, reply, text)); }); return; }
+    }
     getAssistantReply(text).then(reply => handleReply(ref, reply, text));
   }
   function welcomeSubmit(){ const t = welcomeInput.value.trim(); if (!t) return; welcomeInput.value = ''; welcomeInput.style.height = 'auto'; welcomeSend(t); wcAttached = []; renderWcFiles(); }
@@ -4449,6 +4483,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     if (input) input.placeholder = ph;
     if (welcomeInput) welcomeInput.placeholder = ph;
     if (typeof syncOrionBars === 'function') syncOrionBars();
+    if (typeof syncEnhanceBars === 'function') syncEnhanceBars();
   }
 
   /* =====================================================================
@@ -4659,7 +4694,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     bar.style.cssText = 'display:none;gap:8px;padding:8px 14px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch';
     ORION_MODES.forEach(function(pair){
       const c = document.createElement('button'); c.type = 'button'; c.className = 'orion-chip'; c.dataset.mode = pair[0]; c.textContent = pair[1];
-      c.style.cssText = 'flex:0 0 auto;padding:6px 14px;border-radius:999px;border:1px solid rgba(168,141,255,.35);background:transparent;color:#cfc9ff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap';
+      c.style.cssText = 'flex:0 0 auto;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--text-2,#c7cbd6);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease,color .25s ease,border-color .25s ease,box-shadow .25s ease';
       c.addEventListener('click', function(){ setOrionMode(pair[0]); });
       bar.appendChild(c);
     });
@@ -4669,6 +4704,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function setOrionMode(mode){
     orionMode = mode; try { localStorage.setItem('melon_orion_mode', mode); } catch(e){}
     updateComposerPlaceholder();
+    syncOrionBars();
   }
   function syncOrionBars(){
     const show = activeModel === 'orion';
@@ -4679,14 +4715,54 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         const vis = mode === 'chat' ? true : orionModeAllowed(mode);
         c.style.display = vis ? 'inline-flex' : 'none';
         const on = mode === orionMode;
-        c.style.background = on ? 'linear-gradient(135deg,#6D5EF8,#A88DFF)' : 'transparent';
-        c.style.color = on ? '#fff' : '#cfc9ff';
-        c.style.borderColor = on ? 'transparent' : 'rgba(168,141,255,.35)';
+        c.style.background = on ? 'linear-gradient(135deg,#3B82F6,#2563EB)' : 'rgba(255,255,255,.06)';
+        c.style.color = on ? '#fff' : 'var(--text-2,#c7cbd6)';
+        c.style.borderColor = on ? 'transparent' : 'rgba(255,255,255,.14)';
+        c.style.boxShadow = on ? '0 4px 14px rgba(37,99,235,.4)' : 'none';
       });
     });
   }
   buildOrionBar(document.querySelector('.composer'));
   buildOrionBar(document.querySelector('.welcome .wc-box'));
+
+  // ---- Prompt Enhancer (Core-45 / Forge): rewrite a short idea into a premium UI/UX design brief ----
+  var enhanceOn = (function(){ try { return localStorage.getItem('melon_enhance') === '1'; } catch(e){ return false; } })();
+  var enhanceBars = [];
+  const ENHANCE_SYS = "You are a senior product designer and prompt engineer. Rewrite the user's short app or website idea into ONE detailed build brief for a code-generating AI. Output ONLY the rewritten brief — no preamble, no markdown headings, no code fences. Specify: the product purpose and target user; the key pages/sections and layout; a premium design system (a specific modern colour palette with hex values, a Google Fonts type pairing, an 8pt spacing scale, generous rounded corners, soft shadows, tasteful glassmorphism); smooth reactive micro-interactions and transitions (hover, press, focus, entrance animations, 60fps, respects prefers-reduced-motion); fully responsive mobile-first behaviour; and REAL vector icons from an established open icon set (Lucide, Heroicons or Font Awesome via CDN) or inline SVG — NEVER emoji as UI icons. Reference real, loadable assets: Google Fonts for type, a CDN icon library for icons. Aesthetic bar: Linear, Vercel, Cursor, Stripe. Keep it under 320 words and end with: 'Output ONE complete, self-contained, production-quality file.'";
+  function enhancePrompt(text){
+    if (!API_URL || !text || !text.trim()) return Promise.resolve(text);
+    var headers = Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {});
+    return fetch(API_URL, { method: 'POST', headers: headers, body: JSON.stringify({ model: 'claude-haiku-4-5', melonModel: 'methel', system: ENHANCE_SYS, messages: [{ role: 'user', content: text }], max_tokens: 900, stream: false }) })
+      .then(function(r){ if (!r.ok) return text; return r.json().then(function(j){ var out = parseReply(j); return (out && out.trim()) ? out.trim() : text; }); })
+      .catch(function(){ return text; });
+  }
+  function buildEnhanceBar(anchorEl){
+    if (!anchorEl || !anchorEl.parentNode) return;
+    var bar = document.createElement('div'); bar.className = 'enhance-bar';
+    bar.style.cssText = 'display:none;gap:8px;padding:8px 14px 4px';
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'enhance-chip';
+    b.style.cssText = 'display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--text-2,#c7cbd6);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease,color .25s ease,border-color .25s ease,box-shadow .25s ease';
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 6-6"/><path d="M12.5 3.5 14 7l3.5 1.5L14 10l-1.5 3.5L11 10 7.5 8.5 11 7z"/><path d="M18 13.5 18.8 15.4 20.7 16.2 18.8 17 18 18.9 17.2 17 15.3 16.2 17.2 15.4z"/></svg><span>Enhance UI/UX</span>';
+    b.addEventListener('click', function(){ enhanceOn = !enhanceOn; try { localStorage.setItem('melon_enhance', enhanceOn ? '1' : '0'); } catch(e){} syncEnhanceBars(); try { toast(enhanceOn ? 'Prompt enhancer on — builds get premium UI/UX' : 'Prompt enhancer off'); } catch(e){} });
+    bar.appendChild(b);
+    anchorEl.parentNode.insertBefore(bar, anchorEl);
+    enhanceBars.push(bar);
+  }
+  function syncEnhanceBars(){
+    var show = (activeModel === 'core-45' || activeModel === 'forge');
+    enhanceBars.forEach(function(bar){
+      bar.style.display = show ? 'flex' : 'none';
+      var b = bar.querySelector('.enhance-chip'); if (!b) return;
+      b.style.background = enhanceOn ? 'linear-gradient(135deg,#3B82F6,#2563EB)' : 'rgba(255,255,255,.06)';
+      b.style.color = enhanceOn ? '#fff' : 'var(--text-2,#c7cbd6)';
+      b.style.borderColor = enhanceOn ? 'transparent' : 'rgba(255,255,255,.14)';
+      b.style.boxShadow = enhanceOn ? '0 4px 14px rgba(37,99,235,.4)' : 'none';
+    });
+  }
+  if (typeof window !== 'undefined') window.__melonEnhanceOn = function(){ return enhanceOn; };
+  buildEnhanceBar(document.querySelector('.composer'));
+  buildEnhanceBar(document.querySelector('.welcome .wc-box'));
+  syncEnhanceBars();
   applyPlanGates();
 
   /* ===== Vibe-edit loop: iterate on the live preview from chat ===== */
@@ -4864,6 +4940,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     navItems.forEach(x => x.classList.remove('active'));
     document.getElementById('navConnectors').classList.add('active');
     const sc = connectors.querySelector('.cn-scroll'); if (sc) sc.scrollTop = 0;
+    if (typeof refreshConnectorStatus === 'function') refreshConnectorStatus();
   }
   document.getElementById('cnMenu').addEventListener('click', () => { connectors.classList.remove('active'); openSb(); });
   const CT_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Connected';
@@ -4903,11 +4980,69 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function isKeyCard(card){ const b = card.querySelector('.ct-btn'); return /api key/i.test((b && (b.dataset.label || b.textContent)) || ''); }
 
   function onConnect(card){
-    if (card.classList.contains('on')){ setConnected(card, false); return; }
+    const key = cardKey(card);
+    if (card.classList.contains('on')){
+      if (BACKEND_OAUTH.has(key)) backendDisconnect(key);
+      setConnected(card, false); return;
+    }
     if (isKeyCard(card)){ openKeyManager(card); return; }
+    if (BACKEND_OAUTH.has(key)){ backendOAuthStart(key); return; }
     if (OAUTH[cardKey(card)]){ startOAuth(card); return; }
     setConnected(card, true); // custom / generic
   }
+
+  // ---- REAL backend OAuth (tokens handled server-side; nothing sensitive on the client) ----
+  const BACKEND_OAUTH = new Set(['github']);
+  function fnBase(){ return API_URL ? API_URL.replace(/\/[^/]+\/?$/, '') : ''; }
+  function connectorHeaders(){ return Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}); }
+  function capWord(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  async function backendOAuthStart(provider){
+    const base = fnBase();
+    if (!base){ toast('Connect your backend first (Settings → API endpoint)'); return; }
+    if (!MELON_TOKEN()){ toast('Sign in first to connect ' + capWord(provider)); return; }
+    toast('Opening ' + capWord(provider) + ' sign-in…');
+    try {
+      const r = await fetch(base + '/oauth/start', { method: 'POST', headers: connectorHeaders(), body: JSON.stringify({ provider: provider }) });
+      const d = await r.json().catch(function(){ return {}; });
+      if (d && d.url){ location.href = d.url; return; }
+      if (d && d.code === 'not_configured'){ toast(capWord(provider) + " isn't set up yet — its OAuth keys need adding"); return; }
+      toast((d && d.error) || ('Could not start ' + capWord(provider) + ' sign-in'));
+    } catch (e){ toast('Could not reach the server'); }
+  }
+  function backendDisconnect(provider){
+    const base = fnBase(); if (!base || !MELON_TOKEN()) return;
+    try { fetch(base + '/oauth/disconnect', { method: 'POST', headers: connectorHeaders(), body: JSON.stringify({ provider: provider }) }).catch(function(){}); } catch (e){}
+  }
+  async function refreshConnectorStatus(){
+    const base = fnBase(); if (!base || !MELON_TOKEN()) return;
+    try {
+      const r = await fetch(base + '/oauth/status', { method: 'POST', headers: connectorHeaders(), body: '{}' });
+      const d = await r.json().catch(function(){ return {}; });
+      const conn = {}; (d.connectors || []).forEach(function(c){ conn[c.provider] = c; });
+      connectors.querySelectorAll('.ct-card').forEach(function(card){
+        const key = cardKey(card);
+        if (!BACKEND_OAUTH.has(key)) return;
+        const isOn = !!conn[key];
+        setConnected(card, isOn, true);
+        const desc = card.querySelector('.ct-desc');
+        if (desc){
+          if (!desc.dataset.base) desc.dataset.base = desc.textContent;
+          desc.textContent = (isOn && conn[key].account_label) ? ('Connected as ' + conn[key].account_label) : desc.dataset.base;
+        }
+      });
+    } catch (e){}
+  }
+  window.__melonRefreshConnectors = refreshConnectorStatus;
+  // Handle the return trip from the provider (?connected=github / ?connector_error=…)
+  (function(){
+    try {
+      const p = new URLSearchParams(location.search);
+      const c = p.get('connected'), e = p.get('connector_error');
+      if (c) toast(capWord(c) + ' connected ✓');
+      if (e) toast('Connection failed: ' + e.replace(/_/g, ' '));
+      if (c || e){ try { history.replaceState({}, '', location.pathname); } catch (_){} setTimeout(refreshConnectorStatus, 400); }
+    } catch (_){}
+  })();
 
   // ---- real OAuth hand-off (opens the provider's login/consent page) ----
   function oauthClientId(key){ try { return localStorage.getItem('melon_oauth_' + key) || ''; } catch (e) { return ''; } }
@@ -5885,6 +6020,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     function setWsTab(name){
       workspace.querySelectorAll('.ws-tab').forEach(t => t.classList.toggle('on', t.dataset.wt === name));
       workspace.querySelectorAll('.ws-pane').forEach(p => p.classList.toggle('on', p.dataset.wp === name));
+      workspace.classList.toggle('ws-tab-preview', name === 'preview');
       moveTabInd();
     }
     function moveTabInd(){
@@ -5908,6 +6044,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     wsCode.addEventListener('input', () => { clearTimeout(wsEditTimer); wsEditTimer = setTimeout(applyCodeEdit, 450); });
     function runBuild(files){
       buildTimers.forEach(clearTimeout); buildTimers = [];
+      wsPending = false;
+      const _pg = document.querySelector('.ws-prog'); if (_pg) _pg.classList.remove('indet');
       wsTerm.innerHTML = ''; wsProg.style.width = '0';
       workspace.classList.remove('ready');
       document.getElementById('wsStatus').textContent = 'Building…';
@@ -5962,7 +6100,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       try { if (window.__melonRegisterProject) window.__melonRegisterProject({ title: wsState.title, files: wsState.files, doc: wsState.doc }); } catch (e) {}
       runBuild(files);
     }
-    function closeWorkspace(){ workspace.classList.remove('active'); document.body.classList.remove('ws-open'); buildTimers.forEach(clearTimeout); buildTimers = []; }
+    function closeWorkspace(){ workspace.classList.remove('active', 'ws-fs'); document.body.classList.remove('ws-open'); buildTimers.forEach(clearTimeout); buildTimers = []; try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {}); } catch (e) {} }
     function maybeAutoWorkspace(reply, prompt){
       if (!isVibeModel()) return;  // only Forge / Core-45 auto-open the coding workspace
       const files = extractCodeFiles(reply);
@@ -5971,6 +6109,35 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     }
     window.__melonMaybeWorkspace = maybeAutoWorkspace;
     window.__melonOpenWorkspace = openWorkspace;
+    // Open the build page the instant a vibe model (Core-45 / Forge) starts coding.
+    let wsPending = false;
+    function prepWorkspace(prompt){
+      wsPending = true;
+      wsState.files = []; wsState.doc = '';
+      wsState.title = wsTitleFromPrompt(prompt);
+      document.getElementById('wsTitle').textContent = wsState.title;
+      document.getElementById('wsStatus').textContent = 'Building…';
+      workspace.classList.remove('ready');
+      wsFilesEl.innerHTML = ''; wsCode.value = '';
+      try { wsFrame.srcdoc = '<!doctype html><meta charset="utf-8"><body style="margin:0;background:#0e0e17"></body>'; } catch (e) {}
+      buildTimers.forEach(clearTimeout); buildTimers = [];
+      wsTerm.innerHTML = '';
+      [['run', '$ melon build ' + (wsState.title || 'project').toLowerCase().replace(/\s+/g, '-')], ['muted', 'Analysing request and planning architecture…'], ['muted', 'Generating code…']].forEach(s => {
+        const line = document.createElement('div'); line.className = 'tl ' + s[0];
+        line.innerHTML = '<span class="ic">' + (s[0] === 'run' ? '›' : '•') + '</span><span>' + s[1] + '</span>';
+        wsTerm.appendChild(line);
+      });
+      const prog = document.querySelector('.ws-prog'); if (prog) prog.classList.add('indet');
+      try { wsConClear(); wsLog('info', 'Build started — generating your project…'); } catch (e) {}
+      workspace.classList.add('active'); document.body.classList.add('ws-open');
+      try { if (window.__melonWsStartPerf) window.__melonWsStartPerf(); } catch (e) {}
+      setWsTab('build'); moveTabInd();
+    }
+    function cancelPrep(){ if (!wsPending) return; wsPending = false; const prog = document.querySelector('.ws-prog'); if (prog) prog.classList.remove('indet'); closeWorkspace(); }
+    window.__melonPrepWorkspace = prepWorkspace;
+    window.__melonCancelPrep = cancelPrep;
+    window.__melonCloseWorkspace = closeWorkspace;
+    window.__melonIsVibeModel = isVibeModel;
     function wsPrimaryCode(){ const f = wsState.files.find(x => x.lang === 'html') || wsState.files[0]; return f ? f.code : (wsState.doc || ''); }
     function wsAllCode(){ return wsState.files.length === 1 ? wsState.files[0].code : wsState.files.map(f => '/* ' + f.name + ' */\n' + f.code).join('\n\n'); }
     window.__melonRebuildFromReply = (reply, title) => { const files = extractCodeFiles(reply); openWorkspace(files, title || wsState.title); };
@@ -6084,7 +6251,21 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const bnB = document.getElementById('wsBnavBack'), bnF = document.getElementById('wsBnavFwd');
     if (bnB) bnB.addEventListener('click', () => wsReloadPreview());
     if (bnF) bnF.addEventListener('click', () => wsReloadPreview());
-    document.getElementById('wsFullscreen').addEventListener('click', () => { const el = document.getElementById('wsPrevWrap'); try { (el.requestFullscreen || el.webkitRequestFullscreen || function(){}).call(el); } catch (e) { toast('Fullscreen not supported here'); } });
+    function wsToggleFs(){
+      const on = workspace.classList.toggle('ws-fs');
+      if (on) setWsTab('preview');
+      try {
+        const el = document.getElementById('wsPrevWrap');
+        if (on && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+        else if (!on && document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+      } catch (e) {}
+    }
+    document.getElementById('wsFullscreen').addEventListener('click', wsToggleFs);
+    const wsFsExit = document.createElement('button');
+    wsFsExit.className = 'ws-fs-exit'; wsFsExit.setAttribute('aria-label', 'Exit fullscreen');
+    wsFsExit.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+    wsFsExit.addEventListener('click', () => { if (workspace.classList.contains('ws-fs')) wsToggleFs(); });
+    workspace.appendChild(wsFsExit);
     document.getElementById('wsExport').addEventListener('click', () => { document.getElementById('wsDownload').click(); });
     function wsShare(){
       const data = { title: wsState.title || 'Melon project', text: 'Built with Melon Studio', url: location.href };
