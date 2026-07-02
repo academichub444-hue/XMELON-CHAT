@@ -1346,7 +1346,7 @@ body.ws-open{overflow:hidden}
 .ws-dot{width:7px;height:7px;border-radius:50%;background:#E0a73c;box-shadow:0 0 0 3px color-mix(in srgb,#E0a73c 22%,transparent)}
 #workspace.ready .ws-dot{background:#35C28A;box-shadow:0 0 0 3px color-mix(in srgb,#35C28A 22%,transparent);animation:wsPulse 2.4s ease-in-out infinite}
 @keyframes wsPulse{0%,100%{box-shadow:0 0 0 3px color-mix(in srgb,#35C28A 22%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,#35C28A 9%,transparent)}}
-.ws-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:1px solid transparent;background:var(--grad);color:#fff;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(109,94,248,.32);transition:transform .12s}
+.ws-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:1px solid transparent;background:linear-gradient(135deg,#3B82F6,#2563EB);color:#fff;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(37,99,235,.34);transition:transform .12s}
 .ws-pill:active{transform:scale(.95)}
 .ws-pill svg{width:15px;height:15px}
 .ws-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--text-2);cursor:pointer;flex-shrink:0;transition:.15s}
@@ -1365,7 +1365,7 @@ body.ws-open{overflow:hidden}
 .ws-tab{position:relative;z-index:1;flex:1;height:38px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);border-radius:11px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:color .2s,border-color .2s,background .2s}
 .ws-tab svg{width:15px;height:15px}
 .ws-tab.on{color:#fff;border-color:transparent;background:transparent}
-.ws-tab-ind{position:absolute;top:10px;height:38px;width:0;border-radius:11px;background:var(--grad);box-shadow:0 6px 16px rgba(109,94,248,.32);transition:left .32s cubic-bezier(.22,1,.36,1),width .32s cubic-bezier(.22,1,.36,1);z-index:0;pointer-events:none}
+.ws-tab-ind{position:absolute;top:10px;height:38px;width:0;border-radius:11px;background:linear-gradient(135deg,#3B82F6,#2563EB);box-shadow:0 6px 16px rgba(37,99,235,.34);transition:left .32s cubic-bezier(.22,1,.36,1),width .32s cubic-bezier(.22,1,.36,1);z-index:0;pointer-events:none}
 /* body + panes */
 .ws-body{flex:1;position:relative;overflow:hidden;margin:12px 12px 0}
 .ws-pane{position:absolute;inset:0;display:none;flex-direction:column;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface)}
@@ -1409,6 +1409,7 @@ body.ws-open{overflow:hidden}
 .ws-url span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ws-prev-wrap{flex:1;position:relative;overflow:auto;background:#0e0e17;background-image:repeating-conic-gradient(rgba(255,255,255,.025) 0% 25%,transparent 0% 50%);background-size:20px 20px;background-position:50%;display:flex;justify-content:center;align-items:flex-start;border:1px solid var(--border);border-radius:0 0 14px 14px;padding:0;transition:padding .3s ease}
 .ws-frame{width:100%;height:100%;border:none;background:#fff;transition:width .35s cubic-bezier(.22,1,.36,1),max-width .35s,transform .25s ease;transform-origin:top center}
+[data-theme=dark] .ws-prev-wrap{background:#000;background-image:none}
 .ws-prev-wrap.sized{padding:18px}
 .ws-prev-wrap.sized .ws-frame{height:96%;min-height:520px;border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);border:8px solid #14141f}
 [data-theme=light] .ws-prev-wrap.sized .ws-frame{border-color:#d3d7e2}
@@ -3866,8 +3867,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   // Per-model behaviour so the model switcher actually changes the answers.
   const MODEL_MAP = {
     'methel':  { backend: 'claude-haiku-4-5',  maxTokens: 1024, persona: 'You are Methel — fast and concise. Keep replies tight and quick.' },
-    'core-45': { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Core-45 — a coding and debugging specialist. Prefer correct, complete, well-formatted code. When asked to build a page or app, output ONE complete, self-contained file (full <!doctype html> through </html>). Write efficient, compact code so the whole file fits in your output budget — never stop mid-file or leave tags unclosed.' },
-    'forge':   { backend: 'claude-sonnet-4-6', maxTokens: 8192, persona: 'You are Forge — a senior build specialist. Return ONE COMPLETE, runnable file in a single fenced code block. For websites, output a full self-contained index.html: <!doctype html>, <head> with all <style>, and a complete <body>, ending with </html>. Write efficient, compact code so the entire file fits — never truncate, abbreviate, or stop mid-file.' },
+    'core-45': { backend: 'claude-sonnet-4-6', maxTokens: 10000, persona: 'You are Core-45 — a coding and debugging specialist. Prefer correct, complete, well-formatted code. When asked to build a page or app, output ONE complete, self-contained file (full <!doctype html> through </html>). Write efficient, compact code so the whole file fits in your output budget. CRITICAL: a COMPLETE, closed file always beats an elaborate one — if you are running low on space, simplify the design and shorten content so you can finish with every tag closed and a final </html>. Never stop mid-file or leave <style>/tags unclosed.' },
+    'forge':   { backend: 'claude-sonnet-4-6', maxTokens: 10000, persona: 'You are Forge — a senior build specialist. Return ONE COMPLETE, runnable file in a single fenced code block. For websites, output a full self-contained index.html: <!doctype html>, <head> with all <style>, and a complete <body>, ending with </html>. Write efficient, compact code so the entire file fits. CRITICAL: finishing the file completely matters more than adding more — if space runs short, simplify the design and trim content so the file always ends properly closed with </html>. Never truncate, abbreviate, or stop mid-file.' },
     'orion':   { backend: 'claude-opus-4-8',   maxTokens: 2048, persona: 'You are Orion — advanced reasoning and research. Think carefully and structure thorough, well-organised answers.' }
   };
   const SYS_BASE = "You are Melon Studio, a helpful AI assistant. Reply in clean GitHub-flavoured markdown — use headings, **bold**, lists, tables, and fenced code blocks where they help.";
@@ -6002,10 +6003,14 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         if (!/<html[\s>]/i.test(doc)){
           doc = '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><scr' + 'ipt src="https://cdn.tailwindcss.com"></scr' + 'ipt><style>' + css + '</style></head><body>' + doc + (js ? '<scr' + 'ipt>' + js.code + '</scr' + 'ipt>' : '') + '</body></html>';
         } else {
-          // close dangling tags if the model output was cut off, so the preview still renders
-          if (/<style[\s>]/i.test(doc) && !/<\/style>/i.test(doc)) doc += '\n</style>';
+          // Salvage a cut-off build so the preview still renders instead of going blank.
+          const count = (re) => (doc.match(re) || []).length;
+          let openStyle = count(/<style[\s>]/gi) - count(/<\/style>/gi);
+          while (openStyle-- > 0) doc += '\n</style>';
+          let openScript = count(/<script[\s>]/gi) - count(/<\/script>/gi);
+          while (openScript-- > 0) doc += '\n</scr' + 'ipt>';
           if (/<body[\s>]/i.test(doc) && !/<\/body>/i.test(doc)) doc += '\n</body>';
-          if (!/<\/html>/i.test(doc)) doc += '\n</html>';
+          if (/<html[\s>]/i.test(doc) && !/<\/html>/i.test(doc)) doc += '\n</html>';
         }
         return doc;
       }
@@ -6037,6 +6042,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     let wsCurIdx = 0;
     let buildTimers = [];
     let wsEditTimer = null;
+    let wsPendTimer = null;
+    let wsPendStart = 0;
 
     function setWsTab(name){
       workspace.querySelectorAll('.ws-tab').forEach(t => t.classList.toggle('on', t.dataset.wt === name));
@@ -6065,20 +6072,21 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     wsCode.addEventListener('input', () => { clearTimeout(wsEditTimer); wsEditTimer = setTimeout(applyCodeEdit, 450); });
     function runBuild(files){
       buildTimers.forEach(clearTimeout); buildTimers = [];
+      clearInterval(wsPendTimer);
       wsPending = false;
       const _pg = document.querySelector('.ws-prog'); if (_pg) _pg.classList.remove('indet');
       wsTerm.innerHTML = ''; wsProg.style.width = '0';
       workspace.classList.remove('ready');
       document.getElementById('wsStatus').textContent = 'Building…';
       wsConClear(); wsBuildStart = Date.now();
+      const modelName = ((document.querySelector('.mdl-clabel') || {}).textContent || 'the AI').trim();
+      const elapsed = wsPendStart ? Math.max(1, Math.round((Date.now() - wsPendStart) / 1000)) : null;
       const steps = [];
       steps.push(['run', '$ melon build ' + (wsState.title || 'project').toLowerCase().replace(/\s+/g, '-')]);
-      steps.push(['muted', 'Analysing request and planning architecture…']);
-      steps.push(['ok', 'Plan ready · ' + files.length + ' file' + (files.length > 1 ? 's' : '')]);
-      files.forEach(f => steps.push(['run', 'Generating <span class="cmd">' + f.name + '</span>…']));
-      steps.push(['muted', 'Installing dependencies…']);
-      steps.push(['muted', 'Compiling & bundling…']);
-      steps.push(['ok', 'Build complete in ' + (0.6 + Math.random() * 1.2).toFixed(1) + 's']);
+      steps.push(['ok', 'Received ' + modelName + "’s code" + (elapsed ? ' · ' + elapsed + 's' : '')]);
+      steps.push(['run', 'Parsing ' + files.length + ' file' + (files.length > 1 ? 's' : '')]);
+      files.forEach(f => steps.push(['muted', '· ' + f.name]));
+      steps.push(['run', 'Rendering live preview…']);
       steps.push(['ok', 'Preview ready ✓']);
       const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
       let t = 0;
@@ -6121,7 +6129,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       try { if (window.__melonRegisterProject) window.__melonRegisterProject({ title: wsState.title, files: wsState.files, doc: wsState.doc }); } catch (e) {}
       runBuild(files);
     }
-    function closeWorkspace(){ workspace.classList.remove('active', 'ws-fs'); document.body.classList.remove('ws-open'); buildTimers.forEach(clearTimeout); buildTimers = []; try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {}); } catch (e) {} }
+    function closeWorkspace(){ workspace.classList.remove('active', 'ws-fs'); document.body.classList.remove('ws-open'); buildTimers.forEach(clearTimeout); buildTimers = []; clearInterval(wsPendTimer); try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {}); } catch (e) {} }
     function maybeAutoWorkspace(reply, prompt){
       if (!isVibeModel()) return;  // only Forge / Core-45 auto-open the coding workspace
       const files = extractCodeFiles(reply);
@@ -6140,21 +6148,30 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       document.getElementById('wsStatus').textContent = 'Building…';
       workspace.classList.remove('ready');
       wsFilesEl.innerHTML = ''; wsCode.value = '';
-      try { wsFrame.srcdoc = '<!doctype html><meta charset="utf-8"><body style="margin:0;background:#0e0e17"></body>'; } catch (e) {}
+      try { wsFrame.srcdoc = '<!doctype html><meta charset="utf-8"><body style="margin:0;background:#000"></body>'; } catch (e) {}
       buildTimers.forEach(clearTimeout); buildTimers = [];
       wsTerm.innerHTML = '';
-      [['run', '$ melon build ' + (wsState.title || 'project').toLowerCase().replace(/\s+/g, '-')], ['muted', 'Analysing request and planning architecture…'], ['muted', 'Generating code…']].forEach(s => {
-        const line = document.createElement('div'); line.className = 'tl ' + s[0];
-        line.innerHTML = '<span class="ic">' + (s[0] === 'run' ? '›' : '•') + '</span><span>' + s[1] + '</span>';
-        wsTerm.appendChild(line);
-      });
+      const modelName = ((document.querySelector('.mdl-clabel') || {}).textContent || 'the AI').trim();
+      const mkLine = (cls, txt) => { const l = document.createElement('div'); l.className = 'tl ' + cls; l.innerHTML = '<span class="ic">' + (cls === 'run' ? '›' : '•') + '</span><span>' + txt + '</span>'; wsTerm.appendChild(l); return l; };
+      mkLine('run', '$ melon build ' + (wsState.title || 'project').toLowerCase().replace(/\s+/g, '-'));
+      mkLine('muted', 'Sending your prompt to ' + modelName + '…');
+      const liveLine = mkLine('run', modelName + ' is writing your code…');
+      const liveSpan = liveLine.querySelector('span:last-child');
+      wsPendStart = Date.now();
+      clearInterval(wsPendTimer);
+      wsPendTimer = setInterval(() => {
+        if (!wsPending) { clearInterval(wsPendTimer); return; }
+        const s = Math.round((Date.now() - wsPendStart) / 1000);
+        liveSpan.textContent = modelName + ' is writing your code… · ' + s + 's';
+        document.getElementById('wsStatus').textContent = 'Generating… ' + s + 's';
+      }, 1000);
       const prog = document.querySelector('.ws-prog'); if (prog) prog.classList.add('indet');
-      try { wsConClear(); wsLog('info', 'Build started — generating your project…'); } catch (e) {}
+      try { wsConClear(); wsLog('info', modelName + ' is generating your project…'); } catch (e) {}
       workspace.classList.add('active'); document.body.classList.add('ws-open');
       try { if (window.__melonWsStartPerf) window.__melonWsStartPerf(); } catch (e) {}
       setWsTab('build'); moveTabInd();
     }
-    function cancelPrep(){ if (!wsPending) return; wsPending = false; const prog = document.querySelector('.ws-prog'); if (prog) prog.classList.remove('indet'); closeWorkspace(); }
+    function cancelPrep(){ if (!wsPending) return; wsPending = false; clearInterval(wsPendTimer); const prog = document.querySelector('.ws-prog'); if (prog) prog.classList.remove('indet'); closeWorkspace(); }
     window.__melonPrepWorkspace = prepWorkspace;
     window.__melonCancelPrep = cancelPrep;
     window.__melonCloseWorkspace = closeWorkspace;
