@@ -268,6 +268,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .ai-body th{background:var(--nav-active);font-weight:600}
 .ai-body img{max-width:100%;border-radius:12px;display:block}
 .ai-body hr{border:none;border-top:1px solid var(--border)}
+.file-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(120,120,150,.06);border:1px solid var(--border);cursor:pointer;transition:background .2s,border-color .2s,transform .12s;max-width:360px;margin:4px 0}
+[data-theme=dark] .file-card{background:rgba(255,255,255,.045)}
+.file-card:hover{background:rgba(120,120,150,.12);border-color:var(--border-strong)}
+[data-theme=dark] .file-card:hover{background:rgba(255,255,255,.08)}
+.file-card:active{transform:scale(.985)}
+.file-card .fc-ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#3B82F6,#2563EB);color:#fff;flex-shrink:0}
+.file-card .fc-ic svg{width:20px;height:20px}
+.file-card .fc-meta{display:flex;flex-direction:column;min-width:0;flex:1}
+.file-card .fc-name{font-weight:650;font-size:14.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-card .fc-sub{font-size:12px;color:var(--text-3)}
+.file-card .fc-open{color:var(--text-3);flex-shrink:0;display:flex}
+.file-card .fc-open svg{width:18px;height:18px}
 .cb{background:#0f1117;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:0 0 18px}
 [data-theme=dark] .cb{background:#0c0d14}
 .cb-head{display:flex;align-items:center;gap:8px;padding:9px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.07);font-size:12px;color:#9aa0b4;font-family:ui-monospace,monospace}
@@ -3793,6 +3805,25 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
     setTimeout(() => { ref.stages.remove(); keepScroll(); done(); }, reduce ? 0 : 1300);
   }
+  function fileNameForLang(lang, text){
+    lang = (lang || '').toLowerCase();
+    if (/^html?$/.test(lang) || /<!doctype html>/i.test(text) || /<html[\s>]/i.test(text)) return 'index.html';
+    if (lang === 'css') return 'styles.css';
+    if (lang === 'js' || lang === 'javascript') return 'script.js';
+    if (lang === 'jsx' || lang === 'tsx') return 'App.' + lang;
+    if (lang) return 'file.' + lang;
+    return 'file.txt';
+  }
+  function renderFileCard(ref, b){
+    const name = fileNameForLang(b.lang, b.text);
+    const lines = (b.text.match(/\n/g) || []).length + 1;
+    const card = document.createElement('div'); card.className = 'file-card seg-in';
+    card.innerHTML = '<span class="fc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span>'
+      + '<span class="fc-meta"><span class="fc-name">' + esc(name) + '</span><span class="fc-sub">' + lines + ' lines · tap to open in workspace</span></span>'
+      + '<span class="fc-open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>';
+    card.addEventListener('click', () => { try { if (window.__melonMaybeWorkspace) window.__melonMaybeWorkspace(ref.reply, ref.prompt); } catch (e) {} });
+    ref.body.appendChild(card);
+  }
   function streamDoc(ref, reply){
     const blocks = mdBlocks(reply);
     const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -3813,6 +3844,10 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
           else { el.innerHTML = inlineMd(b.text); ref.body.appendChild(cursor); setTimeout(nextBlock, 90); }
         })();
       } else if (b.type === 'code'){
+        if (ref.codeBuild){
+          renderFileCard(ref, b);
+          setTimeout(nextBlock, 60); return;
+        }
         const wrap = document.createElement('div'); wrap.className = 'cb seg-in';
         wrap.innerHTML = '<div class="cb-head"><span class="cb-dot"></span><span class="cb-lang">'+esc(b.lang||'code')+'</span></div><pre><code></code></pre>';
         ref.body.appendChild(wrap);
@@ -4085,6 +4120,9 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     if (!reply){ if (ref.el) ref.el.remove(); finishGenerating(); return; }
     convAddMsg('assistant', reply);
     const isCode = /```/.test(reply);
+    const vibe = !!(window.__melonIsVibeModel && window.__melonIsVibeModel());
+    ref.codeBuild = isCode && vibe;
+    ref.reply = reply; ref.prompt = prompt || '';
     if (ref.el) ref.el.dataset.prompt = prompt || '';
     ref.onDone = () => {
       if (window.__melonAddActions) window.__melonAddActions(ref.el, reply, prompt || '');
@@ -4156,12 +4194,59 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         throw new Error('HTTP ' + res.status + (ed && ed.error ? ': ' + ed.error : ''));
       }
       const ctype = res.headers.get('content-type') || '';
-      const text = ctype.includes('application/json') ? parseReply(await res.json()) : await readStream(res);
+      let text = ctype.includes('application/json') ? parseReply(await res.json()) : await readStream(res);
+      const isVibe = (activeModel === 'core-45' || activeModel === 'forge');
+      if (isVibe && text){
+        let rounds = 0; const MAX_CONT = 5;
+        while (isTruncatedBuild(text) && rounds < MAX_CONT){
+          rounds++;
+          try { document.getElementById('wsStatus').textContent = 'Finishing the file… (part ' + (rounds + 1) + ')'; } catch (e) {}
+          const before = text.length;
+          const next = await continueBuildOnce(history, text);
+          if (!next || next.length <= before + 4) break;   // no progress → stop (guards against endless loops / wasted calls)
+          text = next;
+        }
+      }
       return (text && text.trim()) ? text : localReply(userText);
     } catch (err) {
       if (err && err.name === 'AbortError') return '';
       return "⚠️ I couldn't reach the server just now. *(Check `API_URL` / your network.)*\n\n" + localReply(userText);
     } finally { abortCtrl = null; }
+  }
+
+  // Detect a code build that got cut off (open fence never closed, or HTML without </html>).
+  function isTruncatedBuild(text){
+    const fenceOpens = (text.match(/```/g) || []).length;
+    const openFence = fenceOpens % 2 === 1;                 // odd number of ``` → last block never closed
+    const looksHtml = /<html[\s>]/i.test(text) || /<!doctype html>/i.test(text);
+    const htmlClosed = /<\/html>\s*```?/i.test(text) || /<\/html>\s*$/i.test(text);
+    return openFence || (looksHtml && !htmlClosed);
+  }
+  // One bounded continuation round: ask the model to resume exactly where it stopped, then stitch.
+  async function continueBuildOnce(history, partial){
+    if (!API_URL) return partial;
+    const mdl = activeBackendModel();
+    const msgs = history.concat([
+      { role: 'assistant', content: partial },
+      { role: 'user', content: 'Your previous message was cut off before the file was finished. Continue the file EXACTLY from where you stopped — output ONLY the remaining raw code, with no repetition of earlier lines, no explanation and no markdown code fences. Make sure it ends with the closing </html>.' }
+    ]);
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, GATE_KEY() ? { 'x-melon-key': GATE_KEY() } : {}, MELON_TOKEN() ? { 'Authorization': 'Bearer ' + MELON_TOKEN() } : {}, ADMIN_KEY() ? { 'x-melon-admin': ADMIN_KEY() } : {}),
+        body: JSON.stringify({ model: mdl.backend, melonModel: activeModel, system: systemPrompt(), messages: msgs, max_tokens: mdl.maxTokens || 8192, stream: false }),
+        signal: abortCtrl ? abortCtrl.signal : undefined
+      });
+      if (!res.ok) return partial;
+      const ct = res.headers.get('content-type') || '';
+      let add = ct.includes('application/json') ? parseReply(await res.json()) : await readStream(res);
+      if (!add || !add.trim()) return partial;
+      add = add.replace(/^\s*```[\w-]*\n?/, '').replace(/```\s*$/, '').trim();      // strip any stray fences
+      let stitched = partial.replace(/```\s*$/, '');                                 // drop a dangling closing fence if present
+      stitched = stitched.replace(/\s*$/, '') + '\n' + add;                          // append the remainder
+      if (/```/.test(partial) && (stitched.match(/```/g) || []).length % 2 === 1) stitched += '\n```'; // re-close the fence
+      return stitched;
+    } catch (e) { return partial; }
   }
 
   function parseReply(data){
