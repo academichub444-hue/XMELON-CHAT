@@ -185,9 +185,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .mdl-current.switching .mdl-clabel{opacity:0;transform:translateY(-3px)}
 .mdl-caret{width:12px;height:12px;color:var(--text-3);transition:transform .22s ease}
 .mdl-current[aria-expanded="true"] .mdl-caret{transform:rotate(180deg)}
-.mdl-menu{position:absolute;top:calc(100% + 8px);left:0;width:268px;max-width:80vw;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 18px 44px rgba(20,20,60,.22);padding:6px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px) scale(.97);transform-origin:top left;transition:opacity .2s ease,transform .22s cubic-bezier(.3,.7,.3,1.2),visibility .2s;z-index:45}
+.mdl-menu{position:absolute;top:calc(100% + 8px);left:0;width:284px;max-width:82vw;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);border:1px solid rgba(120,120,150,.18);border-radius:18px;box-shadow:0 18px 44px rgba(20,20,60,.22);padding:7px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px) scale(.97);transform-origin:top left;transition:opacity .2s ease,transform .22s cubic-bezier(.3,.7,.3,1.2),visibility .2s;z-index:45}
+[data-theme=dark] .mdl-menu{background:rgba(22,22,32,.66);border-color:rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .mdl-menu.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
-.mdl-menu .mdl-item{padding:10px 11px}
+.mdl-menu .mdl-item{padding:11px 12px;background:rgba(120,120,150,.05);border:1px solid rgba(120,120,150,.12)}
+[data-theme=dark] .mdl-menu .mdl-item{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.08)}
+.mdl-menu .mdl-item:hover{background:rgba(120,120,150,.12)}
+[data-theme=dark] .mdl-menu .mdl-item:hover{background:rgba(255,255,255,.07)}
+.mdl-menu .mdl-item.sel{background:rgba(109,94,248,.12);border-color:rgba(124,108,240,.42)}
+.mdl-plan{display:inline-flex;align-items:center;gap:4px;margin-left:auto;padding:2px 8px;border-radius:999px;background:rgba(120,120,150,.12);border:1px solid rgba(120,120,150,.2);font-size:10px;font-weight:600;color:var(--text-2);letter-spacing:.02em;white-space:nowrap}
+[data-theme=dark] .mdl-plan{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#cfd0e0}
+.mdl-lock{display:inline-flex;align-items:center;opacity:.9}
+.mdl-lock svg{width:11px;height:11px}
 .welcome.wc-active .mdl-picker{order:2;margin-right:0}
 .recent-list{display:flex;flex-direction:column;gap:3px;overflow-y:auto;min-width:0;width:100%}
 .recent-empty{text-align:center;color:var(--text-3);font-size:13.5px;line-height:1.5;padding:6px 18px}
@@ -1186,7 +1195,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 @keyframes wcBlink2{0%,100%{opacity:1}25%{opacity:0}50%{opacity:1}75%{opacity:0}}
 .wc-box{transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .wc-box.wc-hidden{opacity:0;transform:translateY(16px);pointer-events:none}
-@media (prefers-reduced-motion:reduce){.wc-cursor{animation:none;transition:none}.wc-box{transition:none}}
+.enhance-bar{transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.enhance-bar.wc-hidden{opacity:0;transform:translateY(16px);pointer-events:none}
+@media (prefers-reduced-motion:reduce){.wc-cursor{animation:none;transition:none}.wc-box{transition:none}.enhance-bar{transition:none}}
 .wc-box{margin-top:30px;width:100%;max-width:560px;border-radius:30px;padding:22px 20px 16px;position:relative;background:#FFFFFF;border:1px solid #E7E3F2;box-shadow:0 10px 30px rgba(78,66,158,.10)}
 .wc-input{width:100%;min-height:74px;max-height:150px;border:none;background:none;outline:none;resize:none;font-size:19px;line-height:1.4;color:#473c6d;font-family:inherit;padding:6px 6px 8px}
 /* welcome page acts as the chat surface once a conversation starts */
@@ -3520,6 +3531,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   }
   function openAuth(t){ auth.classList.add('active'); setAuthTab(t); }
   function enterAppDirect(){ auth.classList.remove('active'); onboarding.style.display = 'none'; app.classList.add('active'); try { input.focus(); } catch (_) {} runWelcomeAnim(); }
+  function enterSignIn(){ onboarding.classList.add('leaving'); setTimeout(() => { onboarding.style.display = 'none'; app.classList.add('active'); openAuth('login'); }, 450); }
   auth.querySelectorAll('.auth-tab').forEach(x => x.addEventListener('click', () => setAuthTab(x.dataset.tab)));
   auth.querySelectorAll('[data-goto]').forEach(x => x.addEventListener('click', () => setAuthTab(x.dataset.goto)));
   auth.querySelectorAll('.eye').forEach(e => e.addEventListener('click', () => {
@@ -3659,7 +3671,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   });
 
   document.getElementById('getStarted').addEventListener('click', enterApp);
-  document.getElementById('signIn').addEventListener('click', enterApp);
+  document.getElementById('signIn').addEventListener('click', enterSignIn);
   document.getElementById('navSignup').addEventListener('click', () => { closeSb(); openAuth('signup'); });
 
   // ---- theme ----
@@ -4131,7 +4143,17 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
         }),
         signal: abortCtrl.signal
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (!res.ok) {
+        let ed = null; try { ed = await res.json(); } catch (_) {}
+        if (ed && ed.code === 'sign_in_required') {
+          setTimeout(() => { try { toast('Sign in to use Core-45'); if (typeof openAuth === 'function') openAuth('login'); } catch (e) {} }, 0);
+          return '⚠️ ' + (ed.error || 'Sign in to use Core-45 — guests can use Methel in the meantime.');
+        }
+        if (ed && (ed.code === 'core45_limit' || ed.code === 'rate_limited' || ed.code === 'upgrade_required')) {
+          return '⚠️ ' + (ed.error || 'You’ve reached a usage limit. Please try again later or upgrade.');
+        }
+        throw new Error('HTTP ' + res.status + (ed && ed.error ? ': ' + ed.error : ''));
+      }
       const ctype = res.headers.get('content-type') || '';
       const text = ctype.includes('application/json') ? parseReply(await res.json()) : await readStream(res);
       return (text && text.trim()) ? text : localReply(userText);
@@ -4293,7 +4315,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   let wcTimers = [];
   function wcClearTimers(){ wcTimers.forEach(clearTimeout); wcTimers = []; }
   function wcBox(){ return document.querySelector('.welcome .wc-box') || document.querySelector('.wc-box'); }
-  function revealWelcomeUI(){ const box = wcBox(); if (box) box.classList.remove('wc-hidden'); }
+  function revealWelcomeUI(){ const box = wcBox(); if (box) box.classList.remove('wc-hidden'); const eb = document.querySelector('.welcome .enhance-bar'); if (eb) eb.classList.remove('wc-hidden'); }
   function runWelcomeAnim(){
     const typed = document.getElementById('wcTyped');
     const cursor = document.getElementById('wcCursor');
@@ -4306,10 +4328,11 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     cursor.classList.remove('wc-blink5', 'wc-gone');
     cursor.style.opacity = '';
     if (box) box.classList.add('wc-hidden');
+    const ebReset = document.querySelector('.welcome .enhance-bar'); if (ebReset) ebReset.classList.add('wc-hidden');
     // reduced motion: show everything instantly, no cursor
     if (matchMedia('(prefers-reduced-motion:reduce)').matches){
       typed.textContent = WC_TEXT; cursor.classList.add('wc-gone');
-      if (box) box.classList.remove('wc-hidden'); wcAnimRunning = false; return;
+      if (box) box.classList.remove('wc-hidden'); if (ebReset) ebReset.classList.remove('wc-hidden'); wcAnimRunning = false; return;
     }
     // 0s: begin typing (char by char). ~50ms/char -> ~1.5s total
     let i = 0;
@@ -4419,7 +4442,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     { id: 'methel',  name: 'Methel',  desc: 'Fast and lightweight responses' },
     { id: 'core-45', name: 'Core-45', desc: 'For Coding and debugging projects' },
     { id: 'forge',   name: 'Forge',   desc: 'Coding and development specialist' },
-    { id: 'orion',   name: 'Orion',   desc: 'For Video, Image, PPTX & Excel Gen' }
+    { id: 'orion',   name: 'Orion',   desc: 'For PPTX, Excel, Word & PDF generation' }
   ];
   const MODEL_KEY = 'melon_model';
   const mdlMenu = document.getElementById('mdlMenu');
@@ -4442,9 +4465,12 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       btn.setAttribute('aria-label', m.name + ' — ' + m.desc);
       btn.tabIndex = on ? 0 : -1;
       const locked = (typeof modelAllowed === 'function') && !modelAllowed(m.id);
+      const planName = locked ? (typeof planNeededForModel === 'function' ? planNeededForModel(m.id) : 'pro') : '';
+      const planLabel = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) + ' plan' : '';
+      const LOCK_SVG = '<span class="mdl-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>';
       btn.innerHTML = '<span class="mdl-radio" aria-hidden="true"></span>'
-        + '<span class="mdl-tx"><span class="mdl-name">' + m.name + '<span class="mdl-dot" aria-hidden="true"></span>' + (locked ? '<span class="mdl-lock" aria-hidden="true" style="margin-left:6px;font-size:11px;opacity:.7">🔒</span>' : '') + '</span>'
-        + '<span class="mdl-desc">' + m.desc + (locked ? ' · ' + (typeof planNeededForModel === 'function' ? planNeededForModel(m.id) : 'Pro') + ' plan' : '') + '</span></span>';
+        + '<span class="mdl-tx"><span class="mdl-name">' + m.name + '<span class="mdl-dot" aria-hidden="true"></span>' + (locked ? '<span class="mdl-plan">' + LOCK_SVG + planLabel + '</span>' : '') + '</span>'
+        + '<span class="mdl-desc">' + m.desc + '</span></span>';
       if (locked) btn.classList.add('mdl-locked');
       btn.addEventListener('click', () => { if (locked){ requireUpgrade(m.name, planNeededForModel(m.id)); closeMenu(true); return; } selectModel(m.id); closeMenu(true); });
       btn.addEventListener('keydown', e => onModelKey(e, i));
@@ -4472,13 +4498,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function updateComposerPlaceholder(){
     let ph = activeModel === 'methel' ? 'Ask Anything…' : "Describe what you'd like to build…";
     if (activeModel === 'orion'){
-      var om = (typeof orionMode !== 'undefined') ? orionMode : 'image';
-      ph = om === 'image' ? 'Describe the image to generate…'
-        : om === 'video' ? 'Describe the video to generate…'
-        : om === 'slides' ? 'What should the slides cover?'
-        : om === 'sheet' ? 'Describe the spreadsheet you need…'
-        : om === 'doc' ? 'Describe the document to write…'
-        : 'Ask Orion anything…';
+      ph = 'Describe a document to generate — slides, spreadsheet, Word or PDF…';
     }
     if (input) input.placeholder = ph;
     if (welcomeInput) welcomeInput.placeholder = ph;
@@ -4537,19 +4557,19 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   function vidModel(){ try { return localStorage.getItem('melon_vid_model') || 'minimax/video-01'; } catch(e){ return 'minimax/video-01'; } }
   function titleFrom(p){ return (p || 'Untitled').replace(/\s+/g, ' ').trim().slice(0, 60); }
 
+  function detectDocMode(text){
+    const t = (text || '').toLowerCase();
+    if (/\bpdf\b/.test(t)) return 'pdf';
+    if (/\b(slide|slides|deck|decks|presentation|powerpoint|pptx|keynote|pitch)\b/.test(t)) return 'slides';
+    if (/\b(spreadsheet|excel|xlsx|sheet|worksheet|budget|table|tables|csv|rows?|columns?)\b/.test(t)) return 'sheet';
+    return 'doc'; // Word document by default
+  }
   function maybeOrionGenerate(ref, prompt){
-    if (activeModel !== 'orion' || orionMode === 'chat') return false;
-    if (!orionModeAllowed(orionMode)){
-      if (ref && ref.el) ref.el.remove();
-      finishGenerating();
-      requireUpgrade(modeLabel(orionMode) + ' generation', planNeededForMode(orionMode));
-      return true;
-    }
-    orionGenerate(ref, prompt, orionMode);
+    if (activeModel !== 'orion') return false;
+    orionGenerate(ref, prompt, detectDocMode(prompt));
     return true;
   }
   function orionGenerate(ref, prompt, mode){
-    if (mode === 'image' || mode === 'video') return genMedia(ref, mode, prompt);
     return genDoc(ref, mode, prompt);
   }
   function orionStatus(ref, msg){
@@ -4654,7 +4674,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
   }
 
   async function genDoc(ref, mode, prompt){
-    const MAP = { slides: { kind: 'pptx', label: 'slides' }, sheet: { kind: 'xlsx', label: 'spreadsheet' }, doc: { kind: 'docx', label: 'document' } };
+    const MAP = { slides: { kind: 'pptx', label: 'slides' }, sheet: { kind: 'xlsx', label: 'spreadsheet' }, doc: { kind: 'docx', label: 'document' }, pdf: { kind: 'pdf', label: 'PDF' } };
     const m = MAP[mode]; if (!m) return orionError(ref, 'Unknown generation type.');
     try {
       const docBody = { kind: m.kind, title: titleFrom(prompt) };
@@ -4722,8 +4742,8 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
       });
     });
   }
-  buildOrionBar(document.querySelector('.composer'));
-  buildOrionBar(document.querySelector('.welcome .wc-box'));
+  // Orion is a document generator (auto-detects slides/sheet/doc/pdf) — no mode chips shown.
+  // buildOrionBar intentionally not called.
 
   // ---- Prompt Enhancer (Core-45 / Forge): rewrite a short idea into a premium UI/UX design brief ----
   var enhanceOn = (function(){ try { return localStorage.getItem('melon_enhance') === '1'; } catch(e){ return false; } })();
@@ -4745,6 +4765,7 @@ textarea.ed-input{min-height:96px;resize:none;line-height:1.5}
     b.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 6-6"/><path d="M12.5 3.5 14 7l3.5 1.5L14 10l-1.5 3.5L11 10 7.5 8.5 11 7z"/><path d="M18 13.5 18.8 15.4 20.7 16.2 18.8 17 18 18.9 17.2 17 15.3 16.2 17.2 15.4z"/></svg><span>Enhance UI/UX</span>';
     b.addEventListener('click', function(){ enhanceOn = !enhanceOn; try { localStorage.setItem('melon_enhance', enhanceOn ? '1' : '0'); } catch(e){} syncEnhanceBars(); try { toast(enhanceOn ? 'Prompt enhancer on — builds get premium UI/UX' : 'Prompt enhancer off'); } catch(e){} });
     bar.appendChild(b);
+    if (anchorEl.closest && anchorEl.closest('.welcome')) bar.classList.add('wc-hidden');
     anchorEl.parentNode.insertBefore(bar, anchorEl.nextSibling);
     enhanceBars.push(bar);
   }
